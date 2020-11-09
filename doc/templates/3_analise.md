@@ -15,7 +15,9 @@ A idea principal da app é que, partindo de un "crédito" inicial de 10 horas  n
 ## Funcionalidades
 
 
- 1. Existirá un apartado onde o novo usuario deberá rexistrar o seu nome de usuario e contrasinal para o posterior login; tamén se introducirán un correo de contacto, ou se prefire un teléfono, para que o resto de usuarios poidan comunicarse con esta persoa; un perfil de competencias e intereses e unha zona xeográfica xa que non é o mesmo residir por exemplo en Aríns que na propia cidade de Santiago a efectos de mobilidade dos usuarios. Unha vez se faga o rexistro do novo usuario este poderá acceder á aplicación mediante un login  co cal se comprobará na base de datos se existe o usuario e o contrasinal asociado.
+ 1. Existirá un apartado onde o novo usuario deberá rexistrar o seu nome de usuario e contrasinal para o posterior login; tamén se introducirán un correo de contacto, ou se prefire un teléfono, para que o resto de usuarios poidan comunicarse con esta persoa; un perfil de competencias e intereses e unha zona xeográfica xa que non é o mesmo residir por exemplo en Aríns que na propia cidade de Santiago a efectos de mobilidade dos usuarios. Unha vez se faga o rexistro do novo usuario este poderá acceder á aplicación mediante un login  co cal se comprobará na base de datos se existe o usuario e o contrasinal asociado.  
+ Os novos usuarios terán un "saldo" de tempo de 10 horas iniciais para poder comezar a empregar o banco de tempo. A contía inicial podería ser de 0 horas, pero considero que é importante que os posibles novos usuarios poidan acceder as ofertas dende un primeiro momento para así non perder a oportunidade de gañar un novo membro que participe activamente. Esas 10 horas serán introducidas na base de datos unha vez que se rexistre o novo usuario.  
+ Se un usuario "gasta" todas as horas da súa conta, so poderá acceder ás demandas de outros usuarios. No relativo ás ofertas non poderá acceder ás dos outros usuarios pero si as que este oferte, co fin de poder xestionalas. Isto farase co fin de que o usuario que se quede sen tempo para gastar teña a opción de poder "gañar" horas.  
 
  2. Os usuarios contarán con unha interface propia na que poderán actualizar algún dos seus datos xa existentes, poñer unha imaxe se o desexan e nesta interface é onde poderán ver a cantidade de tempo da que dispoñen(en horas).
 
@@ -33,9 +35,6 @@ A idea principal da app é que, partindo de un "crédito" inicial de 10 horas  n
 
  6. Cando finalice o tempo na data establecida, aparecerá no servizo ofertado ou demandado outro botón para facer a "transacción" pola cal se lle sumará e restará tempo aos usuarios implicados. Ao igual que nunha transacción real será o usuario que ten que "pagar" o tempo establecido o que realice a operación mediante este botón. Se o servizo se trata de unha oferta, serán as persoas que "contraten" esa oferta os que contarán co botón citado para poder dar o seu tempo. No caso de ser unha demanda, será o usuario creador de esa demanda o que lle aparecerá o botón coa finalidade de "pagar" polo servizo realizado aos usuarios que aceptasen esa demanda.
 
- 7. Se un usuario "gasta" todas as horas da súa conta, so poderá acceder ás demandas de outros usuarios. No relativo ás ofertas non poderá acceder ás dos outros usuarios pero si as que este oferte, co fin de poder xestionalas. Isto farase co fin de que o usuario que se quede sen tempo para gastar teña a opción de poder "gañar" horas.
-
-8. Os novos usuarios terán un "saldo" de tempo de 10 horas iniciais para poder comezar a empregar o banco de tempo. A contía inicial podería ser de 0 horas, pero tendo en conta o punto anterior, é importante que os posibles novos usuarios poidan acceder as ofertas dende un primeiro momento para así non perder a oportunidade de gañar un novo membro que participe activamente. Esas 10 horas serán introducidas na base de datos unha vez que se rexistre o novo usuario.
 
 ## Tipos de usuarios
 
