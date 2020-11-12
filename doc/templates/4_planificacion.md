@@ -111,24 +111,6 @@ Indeterminado.
 
 ## Orzamento
 
-O orzamento do proxecto será a suma do importe dos materiais que necesites para realizar o proxecto máis o importe que corresponde ao traballo realizado.
-
-O importe relacionado co traballo no proxecto é relativamente fácil de obter se se elaboraron ben as etapas anteriores: definir as actividades necesarias e os recursos propios de cada actividade. Neste caso disporase dun custo por cada actividade e a suma do custo de todas as actividades será o custo total do traballo do proxecto.
-
-Para establecer os custos do proxecto debes ter en conta diferentes conceptos:
-
-- Materiais que se utilizan: material funxible, materias primas, materiais didácticos, roupa de traballo…
-- Custo horario das persoas que participan directamente na actividade.
-- Alugueiro/compra de ferramentas, maquinaria, equipos informáticos e/ou audiovisuais…
-- Alugueiro/compra de locais
-- Contratos de subministracións: auga, luz, electricidade, gas… Subcontratacións.
-- Gastos de publicidade…
-- Seguros ...
-
-O maior custo no proxecto case sempre corresponde ás persoas, polo que é importante controlar o número de horas que se invisten en cada actividade para que non se nos desequilibre o orzamento. Tamén hai que coidar as subcontratacións; convén que traballen cun orzamento establecido.
-
- A continuación preséntanse dúas opción de táboa para facilitar a creación do orzamento do proxecto:
-
  O orzamento do proxecto non vai a ser moi elevado debido a que vai a ser un programa desenvolto por un so programador, con un equipo e todo o software baseado en Open Source.
 
 ### Orzamento por partidas de inversión / gasto
