@@ -5,7 +5,7 @@
 O proxecto a desenvolver terá un enfoque documental.
 
 **• Unha descrición do proxecto**  
-
+A DESCRICIÓN DO PROXECTO CREO QUE ESTÁ BASTANTE CLARA.
 O proxecto está baseado nunha aplicación en android que xestione un banco do tempo dentro do concello de Santiago de Compostela.  
 Un banco de tempo é un concepto no que persoas ofrecen servizos, coñecementos ou 	habilidades en intercambio por outros servizos coñecementos ou habilidades, dentro dunha 	relación na que o económico desaparece e a medida do valor de todo o achegado é o tempo 	que se invirte. Cada servizo, coñecemento ou habilidade intercambiada ten o mesmo valor, 	medido en unidades de tempo, independentemente de que o doante sexa un principiante ou 	un experto. Os intercambios desta maneira realmente o que premian é a solidariedade entre 	os integrantes do banco de tempo.  
 O obxectivo de crear esta aplicación é axudar á comunicación e á xestión dos servizos ou do 	tempo ofrecido polas persoas do concello que queiran participar nun banco de tempo.
@@ -13,7 +13,7 @@ O obxectivo de crear esta aplicación é axudar á comunicación e á xestión d
   Un exemplo de uso sería: O usuario_1 ofrece 1 hora na que pode dar clases de guitarra ofertando a través da aplicación. O usuario_2 está interesado nas clases. Unha vez impartidas as clases, restaráselle 1 hora na súa “conta de tempo” ao usuario_2 e sumaráselle 1 hora á “conta de tempo” do usuario_1. Polo tanto o usuario_2 débelle 1 hora ao banco de tempo, non ao usuario_1, e o usuario_1 ten unha hora que pode “gastar” nun servizo que ofreza calqueira usuario, non ten que ser exclusivamente o usuario_2.  
 Ainda que nun principio me restrinxirei á Área de Santiago, creo que é unha aplicación que 	se podería extrapolar a outras zonas de Galicia.
 
-• **Unha contextualización que identifique as necesidades ás que dará resposta o proxecto e defina o modelo de negocio**
+• **Unha contextualización que identifique as necesidades ás que dará resposta o proxecto e defina o modelo de negocio** A CONTEXTUALIZACIÓN ESTÁ BEN.
 
   Hai antecedentes de intercambios baseados en unidades de tempo desde o século XIX. Desde entón, os bancos de tempo forman parte dun importante movemento mutualista e cooperativista, tanto nos Estados Unidos, como posteriormente en Europa e no resto do mundo.  Pero foi a partir da decada de 1980 cando se concebiron os bancos de tempo modernos, nun momento de crise económica e de recortes nos servizos de Estados Unidos.
 
@@ -32,6 +32,7 @@ Como dixen antes, o banco de tempo está enfocado aos intercambios solidarios de
   Por outro lado tamén existirá un apartado de demandas que funcionará ao revés que o das ofertas. É decir: o usuario_1 pon na aplicación unha demanda na que precisa que alguén lle axude a facer unha mudanza, e o usuario_2 acepta ir. Neste caso restaráselle o tempo empregado ao usuario_1 e sumaráselle ao usuario_2.  
   Se un usuario se queda sen tempo na súa conta non poderá entrar a ver os servizos ata que este oferte un e outro ou outros usuarios acepten “gastar” o seu tempo no servizo ofertado.  
   Os datos dos usuarios estarán gardados nunha base de datos, a cal durante a fase de desenvolvemento da aplicación estaría aloxada nun entorno local para facilitar a creación da aplicación. Na fase de producción a base de datos aloxarase nun servidor da nube.
+NON FALAS NADA DAS TÉCNICAS QUE VAS EMPREGAR PARA COMERCIALIZAR/DAR A COÑECER AOS POTENCIAIS USUSARIOS DO TEU BANCO DE TEMPO. CÓMO O FARÁS? A TRAVÉS DE REDES SOCIAIS, PATROCINANDO ALGÚN EVENTO, A TRAVÉS DUNHA PÁXINA WEB...INDICA QUE TÉCNICA DE PROMOCIÓN EMPREGARÍAS E POR QUE.
 
   **Unha proposta das tecnoloxías a empregar:**
   - **Ubuntu 20.04** como Sistema Operativo no que desenvolver a app.
