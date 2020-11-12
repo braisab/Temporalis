@@ -8,45 +8,106 @@
 
 ### Fases planificadas
 
-Descríbense as fases en que se divide o proxecto e as tarefas que se han levar a cabo en cada unha destas fases.
+**Recursos humanos:**   
+ Dado que o proxecto é unha app para Android todas as fases e tarefas se lle atribuirán á mesma persoa.
+#### Fase 1: Estudo de necesidades  
 
-Pódense indicar os recursos materiais e humanos asociados a cada tarefa ou, se son os mesmos, de maneira máis xeral.
+##### Tarefa 1: Exploración
 
-#### Fase 1: Estudo de necesidades e modelo de negocio
+**Descrición:**  
+  Propósito xeral: Estudo das características xeográficas, poboacionais (rangos de idade, distribución no concello...), tipos de datos que se recopilarán, fontes de información, métodos a empregarse e uso potencial da información.
 
-##### Tarefa 1: xxxxxxxx
+**Recursos hardware/software:**  
+  Ordenador con conexión a internet.  
 
-Descrición:
+**Duración:**  
+  1 hora  
 
-Recursos hardware/software:
+#### Tarefa 2: Recopilación de datos:
 
-Recursos humanos: Persoas que se encargarán de realizar esta tarefa
+**Descrición:**    
+  Loxística dos métodos da recopilación de datos e a propia recopilación de estos por todo o Concello de Santiago de Compostela.
 
-Duración:
+**Recursos hardware/software:**  
+  Ningún.  
 
-#### Tarefa 2
+**Duración:**  
+  1 semana
 
-...
+#### Tarefa 3: Análise dos datos:  
+  Análise dos datos recabados coa finalidade de obter un resultado do estudo en base e estos.
 
-#### Fase 2: xxxxx
+**Recursos hardware/software:**  
+Un Ordenador
 
-##### Tarefa 1: xxxxxxxx
+**Duración:**  
+12 horas
 
-Descrición:
+#### Fase 2: Desenvolvemento da aplicación:
 
-Recursos hardware/software:
+##### Tarefa 1: Creación da BD
 
-Recursos humanos:
+**Descrición:**  
+  Creación da E-R, esquema relacional e a propia creación da base de datos con todas as clases e métodos que require a aplicación para poder interactuar con esta.
 
-Duración:
+**Recursos hardware/software:**
+  Ordenador con Linux , MySQL  e Android Studio instalados.
 
-#### Tarefa 2
+**Duración:**  
+  4 semanas
 
-...
+#### Tarefa 2: Desenvolvemento das funcionalidades:
+  Desenvolvemento das funcionalidades como por exemplo as "transaccións" do tempo dentro do banco de tempo.
+
+**Recursos hardware/software:**  
+    Ordenador con Linux , MySQL e Android Studio instalados.
+
+**Duración:**      
+   4 semanas  
+
+#### Tarefa 3: Desenvolvemento das interfaces:
+Ainda que xa existirán interfaces para ir probando o que se foi creando nos apartados anteriores estas serán "plantillas" das interfaces finais, as cales precisarán de un tempo para a súa optimización.  
+
+   **Recursos hardware/software:**  
+       Ordenador con Linux , MySQL  e Android Studio instalados.
+
+   **Duración:**      
+      2 semanas
+
+#### Tarefa 4: Creación de tests e busqueda de erros:  
+Desenvolvemento de tests coa finalidade de atopar e correxir erros que poidan ir aparecendo no código.
+
+**Recursos hardware/software:**  
+Ordenador con Linux , MySQL  e Android Studio instalados.
+
+**Duración:**      
+2 semanas
+
+#### Fase 3: Producción:
+
+##### Tarefa 1: Lanzamento da aplicación
+Neste momento subirase a aplicación a Play Store e a F-Droid.
+
+**Recursos hardware/software:**  
+    Ordenador con Android Studio instalado e con conexión a internet.
+
+**Duración:**      
+  Ao ser a primeira app que subiría a Play Store esta pode tardar 2 días como máximo en ser revisada para poder estar dispoñible na tenda.
+
+
+##### Tarefa 2: Optimización da aplicación.
+
+Seguirase optimizando a aplicación buscando erros e bugs a base de máis tests e de experiencias de usuarios.
+
+**Recursos hardware/software:**  
+Ordenador con Linux , MySQL  e Android Studio instalados.
+
+**Duración:**      
+Indeterminado.
 
 ### Diagrama de Gantt
 
-Un diagrama de Gantt é unha representación gráfica da secuenciación que tes que seguir para realizar as tarefas planificadas. Pódese usar o software "Gantt project" ou calquera outro que permita representar nun cronograma a información relativa á planificación de tarefas.
+![gantt](doc/img/gantt.png)
 
 ## Orzamento
 
@@ -68,53 +129,42 @@ O maior custo no proxecto case sempre corresponde ás persoas, polo que é impor
 
  A continuación preséntanse dúas opción de táboa para facilitar a creación do orzamento do proxecto:
 
-### Orzamento por actividade
-
-| ACTIVIDADE | DURACIÓN | CUSTO (EUROS) | | CUSTO TOTAL ACTIVIDADE |
-|--|--|--|--|--|
-|            |          | PERSOAS|RECURSOS MATERIAIS|
-|||||
-|||||
-|||||
-|||||
-
-| TOTAL | PROXECTO |
-| -- | -- |
+ O orzamento do proxecto non vai a ser moi elevado debido a que vai a ser un programa desenvolto por un so programador, con un equipo e todo o software baseado en Open Source.
 
 ### Orzamento por partidas de inversión / gasto
 
 | CONCEPTO | IMPORTE|
 |--|--|
 |**A) INVERSIÓNS**
-|Gastos de establecemento e gastos de constitución
-|Total inmobilizacións inmateriais
-|Terreos
-|Construcións
-|Instalacións técnicas
-|Maquinaria
-|Ferramentas
-|Mobiliario e instalacións
-|Equipos informáticos
-|Elementos de transporte
-|Outro inmobilizado material
-|Total inmobilizacións materiais
-|Outros gastos a distribuír en varios exercicios
-|**TOTAL INVERSIÓNS:**
+|Gastos de establecemento e gastos de constitución|0€
+|Total inmobilizacións inmateriais|0€
+|Terreos|0€
+|Construcións|0€
+|Instalacións técnicas|0€
+|Maquinaria|0€
+|Ferramentas|0€
+|Mobiliario e instalacións|0€
+|Equipos informáticos|920 €
+|Elementos de transporte|30€
+|Outro inmobilizado material|0€
+|Total inmobilizacións materiais|0€
+|Outros gastos a distribuír en varios exercicios|0€
+|**TOTAL INVERSIÓNS:**|950€
 |**B) GASTOS**
-|Compras de materiais
-|Arrendamentos
-|Publicidade, propaganda e relacións públicas
-|Persoal
-|Reparacións e conservación
-|Servizos de profesionais independentes
-|Outros gastos xerais
-|Gastos financeiros
-|Amortizacións
-|Gastos de xestión e administración
-|**TOTAL GASTOS:**
+|Compras de materiais|0€
+|Arrendamentos|0€
+|Publicidade, propaganda e relacións públicas|0€
+|Persoal|0€
+|Reparacións e conservación|0€
+|Servizos de profesionais independentes|0€
+|Outros gastos xerais|0€
+|Gastos financeiros|0€
+|Amortizacións|0€
+|Gastos de xestión e administración|0€
+|**TOTAL GASTOS:**|0€
 
-|TOTAL ORZAMENTO:
-|--|
+|TOTAL ORZAMENTO|950
+|--|--|
 
 ### WEBGRAFÍA
 
