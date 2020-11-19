@@ -5,7 +5,9 @@
 ## Casos de uso [descritos en fichas e/ou mediante esquemas; deben incluír o(s) tipo(s) de usuario implicados en cada caso de uso]
 
 ## Deseño de interface de usuarios [mockups ou diagramas...]
-
+![](doc/img/mockups1.png)
+![](doc/img/mockups2.png)
+![](doc/img/mockups3.png)
 ## Diagrama de Base de Datos
 ![](doc/img/E_R_BancoTempo.png)
 ## Diagrama de compoñentes software que constitúen o produto e de despregue
