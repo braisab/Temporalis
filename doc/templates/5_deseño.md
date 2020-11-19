@@ -7,5 +7,8 @@
 ## Deseño de interface de usuarios [mockups ou diagramas...]
 
 ## Diagrama de Base de Datos
-
+![](doc/img/E_R_BancoTempo.png)
 ## Diagrama de compoñentes software que constitúen o produto e de despregue
+
+![](doc/img/D_Componentes_D.png)
+![](doc/img/D_Componentes_P.png)
