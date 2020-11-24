@@ -8,6 +8,9 @@
 ![](doc/img/mockups1.png)
 ![](doc/img/mockups2.png)
 ![](doc/img/mockups3.png)
+![](doc/img/mockups4.png)
+![](doc/img/mockups5.png)
+![](doc/img/mockups6.png)
 ## Diagrama de Base de Datos
 ![](doc/img/E_R_BancoTempo.png)
 ## Diagrama de compoñentes software que constitúen o produto e de despregue
