@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/degrade">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Título"
+        android:id="@+id/eTextDemTitulo"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Descrición"
+        android:id="@+id/eTextDemDescricion"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Data"
+        android:id="@+id/eTextDemData"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Hora"
+        android:id="@+id/eTextDemHora"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Lugar"
+        android:id="@+id/eDemLugar"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Num Persoas"
+        android:id="@+id/eDemMaxUsers"
+        android:layout_gravity="center_horizontal"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Demanda"
+        android:id="@+id/btnCrearDem"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

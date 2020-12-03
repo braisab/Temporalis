@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Temporalis</string>
+    <string name="name_register">Usuario:</string>
+    <string name="password_register">Contrasinal:</string>
+    <string name="btn_register">Entrar</string>
+    <string-array name="parroquias">
+        <item>Aríns</item>
+        <item>Bando</item>
+        <item>Barciela</item>
+        <item>Busto</item>
+        <item>O Castiñeiriño</item>
+        <item>César</item>
+        <item>Conxo</item>
+        <item>Eixo</item>
+        <item>Enfesta</item>
+        <item>Fecha</item>
+        <item>Figueiras</item>
+        <item>Grixoa</item>
+        <item>Laraño</item>
+        <item>Marantes</item>
+        <item>Marrozos</item>
+        <item>Nemenzo</item>
+        <item>A Peregrina</item>
+        <item>Sabugueira</item>
+        <item>Santiago(Cidade)</item>
+        <item>Sar</item>
+        <item>Verdía</item>
+        <item>Vidán</item>
+        <item>Villestro</item>
+    </string-array>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:background="@drawable/degrade">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCrearOferta"
+        android:text="Crear Oferta"
+        android:gravity="center"
+        android:background="@drawable/boton_redondo"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewOfertas"
+        android:layout_margin="15dp"
+        android:scrollbars="vertical"/>
+
+</LinearLayout>

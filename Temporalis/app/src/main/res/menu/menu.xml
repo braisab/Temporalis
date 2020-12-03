@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+            <item android:title="Ofertas"
+                android:id="@+id/action_bar_ofertas"/>
+            <item android:title="Demandas"
+                android:id="@+id/action_bar_demandas"/>
+            <item android:title="As miñas ofertas/demandas"
+                android:id="@+id/action_bar_self_services"/>
+            <item android:title="Ofertas/demandas aceptadas"
+                android:id="@+id/other_services"/>
+            <item android:title="Perfil"
+                android:id="@+id/perfil"/>
+        </menu>

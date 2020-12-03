@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/degrade">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Título"
+        android:id="@+id/eTextTitulo"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Descrición"
+        android:id="@+id/eTextDescricion"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Data"
+        android:id="@+id/eTextData"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Hora"
+        android:id="@+id/eTextHora"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Lugar"
+        android:id="@+id/lugar"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Num Persoas"
+        android:id="@+id/eMaxUsers"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_gravity="center_horizontal"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Oferta"
+        android:id="@+id/btnCrear"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

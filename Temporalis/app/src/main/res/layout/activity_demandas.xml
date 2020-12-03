@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/degrade"
+    android:padding="2dp">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCrearDemanda"
+        android:text="Crear Demanda"
+        android:gravity="center"
+        android:background="@drawable/boton_redondo"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewDemandas"
+        android:layout_margin="15dp"
+        android:scrollbars="vertical"/>
+
+</LinearLayout>
