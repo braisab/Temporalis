@@ -3,7 +3,7 @@
 ## Modelo conceptual do dominio da aplicación e/ou Diagrama de clases [usando UML, ConML, ou linguaxe semellante]
 ![](doc/img/DiagramaClases.png)
 ## Casos de uso [descritos en fichas e/ou mediante esquemas; deben incluír o(s) tipo(s) de usuario implicados en cada caso de uso]
-![](doc/img/CasosUso1.png)
+![](doc/img/CasosUso1.png)  
 ![](doc/img/CasosUso2.png)
 ![](doc/img/CasosUso3.png)
 ![](doc/img/CasosUso4.png)
