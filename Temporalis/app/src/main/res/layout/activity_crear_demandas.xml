@@ -38,6 +38,14 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="Duración(Horas)"
+        android:id="@+id/eTextDemTempo"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="Num Persoas"
         android:id="@+id/eDemMaxUsers"
         android:layout_gravity="center_horizontal"/>

@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -152,4 +154,30 @@ public class Demanda extends AppCompatActivity {
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent ofertasIntent = new Intent(this,Ofertas.class);
+        Intent demandasIntent = new Intent(this,Demandas.class);
+        Intent selfIntent = new Intent(this,MeusServizos.class);
+        switch (item.getItemId()) {
+            case R.id.action_bar_ofertas:
+                startActivity(ofertasIntent);
+                return true;
+            case R.id.action_bar_demandas:
+                startActivity(demandasIntent);
+                return true;
+            case R.id.action_bar_self_services:
+                startActivity(selfIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

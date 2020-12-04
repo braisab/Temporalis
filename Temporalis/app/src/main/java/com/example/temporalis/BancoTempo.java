@@ -44,12 +44,16 @@ public class BancoTempo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent ofertasIntent = new Intent(this,Ofertas.class);
         Intent demandasIntent = new Intent(this,Demandas.class);
+        Intent selfIntent = new Intent(this,MeusServizos.class);
         switch (item.getItemId()) {
             case R.id.action_bar_ofertas:
                 startActivity(ofertasIntent);
                 return true;
             case R.id.action_bar_demandas:
                 startActivity(demandasIntent);
+                return true;
+            case R.id.action_bar_self_services:
+                startActivity(selfIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

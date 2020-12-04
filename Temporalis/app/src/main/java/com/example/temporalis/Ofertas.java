@@ -3,6 +3,7 @@ package com.example.temporalis;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +16,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Ofertas extends AppCompatActivity {
     BBDD baseDatos;
@@ -31,6 +36,7 @@ public class Ofertas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ofertas);
+        checkDate();
         cargarListView();
         crearOferta();
     }
@@ -50,7 +56,7 @@ public class Ofertas extends AppCompatActivity {
         final Intent ofertaIntent = new Intent(this,Oferta.class);
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
-        final ArrayList<Servizo> ofertas = baseDatos.getOfertas();
+        final ArrayList<Servizo> ofertas = baseDatos.getOfertasVisibles();
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listView = findViewById(R.id.listViewOfertas);
         arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,ofertas){
@@ -73,17 +79,42 @@ public class Ofertas extends AppCompatActivity {
         });
     }
 
+    public void checkDate(){
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
+        ArrayList<Servizo> ofertas = baseDatos.getOfertas();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String sToday = dateFormat.format(Calendar.getInstance().getTime());
+            Date today = dateFormat.parse(sToday);
+            for (Servizo oferta : ofertas) {
+                String data = oferta.getData();
+                String hora = oferta.getHora();
+                Date dataServizo = dateFormat.parse(data+ " "+hora);
+                if (today.after(dataServizo)) {
+                        baseDatos.setServizoInvisible(oferta.getIdServizo());
+                }
+            }
+        }catch (ParseException e){
+            Log.e("Erro", "Erro no parsing da data");
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent demandasIntent = new Intent(this,Demandas.class);
+        Intent selfIntent = new Intent(this,MeusServizos.class);
         switch (item.getItemId()) {
             case R.id.action_bar_demandas:
                 startActivity(demandasIntent);
                 return true;
+            case R.id.action_bar_self_services:
+                startActivity(selfIntent);
             default:
                 return super.onOptionsItemSelected(item);
         }

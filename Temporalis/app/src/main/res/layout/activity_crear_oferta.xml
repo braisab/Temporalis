@@ -18,12 +18,15 @@
         android:layout_height="wrap_content"
         android:hint="Descrición"
         android:id="@+id/eTextDescricion"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Data"
         android:id="@+id/eTextData"
+        android:inputType="date"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
         android:textColorHint="@color/white"/>
@@ -31,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Hora"
+        android:inputType="datetime"
         android:id="@+id/eTextHora"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -40,6 +44,14 @@
         android:layout_height="wrap_content"
         android:hint="Lugar"
         android:id="@+id/lugar"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Duración(Horas)"
+        android:id="@+id/eTextTempo"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:layout_gravity="center_horizontal"/>

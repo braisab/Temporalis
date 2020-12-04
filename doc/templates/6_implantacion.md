@@ -6,8 +6,7 @@
 
 **- Requirimentos de hardware, servidores na nube, etc.**   
 No relativo ao hardware, será válido calquera dispositivo con sistema Android.
-O equipo para o desenvolvemento será Huawei MateBook 13, o cal conta con un procesador Intel Core i7-8565U, memoria Ram de 16GB e unha SSD con capacidade de 512GB.  
-Na fase de producción será necesario un servidor na nube para implantar a base de datos externa á cal se conectará a aplicación para facer todas as operacións que dependan de ela. O servidor escollido nun principio será un servidor <a href="https://www.ionos.es/server-configurator?__sendingdata=1&cart.action=add-bundle&cart.bundle=tariff-cloud-vps-fix-xxl-bundle&packageselection=servidores%2Fvps">VPS</a>, unha vez que o proxecto comeza a contar con moitos máis usuarios contratarase un servidor <a href="https://www.ionos.es/server-configurator?__sendingdata=1&cart.action=add-bundle&cart.bundle=tariff-ngcs-unlimited-fix-xxl-bundle&packageselection=cloud%2Fservidores-cloud">Cloud</a>.
+Será necesario un servidor na nube para implantar a base de datos externa á cal se conectará a aplicación para facer todas as operacións que dependan de ela. O servidor escollido nun principio será un servidor <a href="https://www.ionos.es/server-configurator?__sendingdata=1&cart.action=add-bundle&cart.bundle=tariff-cloud-vps-fix-xxl-bundle&packageselection=servidores%2Fvps">VPS</a>, unha vez que o proxecto comeza a contar con moitos máis usuarios contratarase un servidor <a href="https://www.ionos.es/server-configurator?__sendingdata=1&cart.action=add-bundle&cart.bundle=tariff-ngcs-unlimited-fix-xxl-bundle&packageselection=cloud%2Fservidores-cloud">Cloud</a>.
 
 **- Software necesario (S.O. válidos, software externo co que interaciona a nosa aplicación, etc.).**  
 Para lanzar a aplicación necesitarase un dispositivo con SO Android 6.0 ou unha versión maior.  
@@ -18,10 +17,12 @@ Ademais contaremos coa API JDBC para a conexión da aplicación coa BD dende o l
 A seguridade estará xestionada polo lado do servidor contratado.  
 
 **Carga inicial de datos na base de datos. Migración de datos xa existentes noutros formatos.**  
-A carga inicial dos datos virán dados polo servidor unha vez que o usuario se rexistre na aplicación.  
+Non existe unha carga inicial de datos na base de datos.  Crearanse as taboas
 
 **Usuarios do sistema. Usuarios da aplicación.**  
 Existirá un usuario con permisos de administrador para poder xestionar a BD, os usuarios da aplicación nunca poderán acceder como administradores.  
+
+TODO:(Configuracion da BBDD: FUsionar os dous anteriores)  
 
 ### Información relativa á administración do sistema, é dicir, tarefas que se deberán realizar unha vez que o sistema estea funcionando, como por exemplo
 
@@ -29,10 +30,7 @@ Existirá un usuario con permisos de administrador para poder xestionar a BD, os
 Realizarase unha copia de seguridade semanal do sistema na fase de desenvolvemento e poidamos así facer un backup de este se ocurre algún fallo.  
 
 **Copias de seguridade da base de datos.**  
-As copias de seguridade da BD estarán xestionadas pola empresa contratada do servidor na nube.  
-**Xestión de usuarios.**  
-**Xestión seguridade.**  
-**Xestión de incidencias, que poden ser de dous tipos: de sistema (accesos non autorizados á BD, etc) ou de fallos no software.**  
+As copias de seguridade da BD estarán xestionadas pola empresa contratada do servidor na nube.   Copia de seguridade todos os dias as 3 da maña
 
 ### Información relativa ó mantemento do sistema
 
