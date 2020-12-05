@@ -4,6 +4,9 @@ public class EmpregaServizo {
     private int idServizo;
     private int idUsuario;
 
+    public EmpregaServizo(){
+    }
+
     public EmpregaServizo(int idServizo, int idUsuario) {
         this.idServizo = idServizo;
         this.idUsuario = idUsuario;

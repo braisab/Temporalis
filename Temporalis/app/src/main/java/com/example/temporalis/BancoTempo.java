@@ -41,10 +41,14 @@ public class BancoTempo extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent ofertasIntent = new Intent(this,Ofertas.class);
         Intent demandasIntent = new Intent(this,Demandas.class);
         Intent selfIntent = new Intent(this,MeusServizos.class);
+        Intent otherServices = new Intent(this,ServizosAceptados.class);
+        Intent perfilIntent = new Intent(this,Perfil.class);
         switch (item.getItemId()) {
             case R.id.action_bar_ofertas:
                 startActivity(ofertasIntent);
@@ -54,6 +58,12 @@ public class BancoTempo extends AppCompatActivity {
                 return true;
             case R.id.action_bar_self_services:
                 startActivity(selfIntent);
+                return true;
+            case R.id.other_services:
+                startActivity(otherServices);
+                return true;
+            case R.id.action_bar_perfil:
+                startActivity(perfilIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

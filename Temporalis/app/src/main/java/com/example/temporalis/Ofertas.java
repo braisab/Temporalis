@@ -36,6 +36,7 @@ public class Ofertas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ofertas);
+        checkMaxUsers();
         checkDate();
         cargarListView();
         crearOferta();
@@ -79,6 +80,18 @@ public class Ofertas extends AppCompatActivity {
         });
     }
 
+    public void  checkMaxUsers(){
+        baseDatos = new BBDD(this);
+        baseDatos.getWritableDatabase();
+        ArrayList<Servizo> ofertas = baseDatos.getOfertas();
+        for(Servizo oferta : ofertas) {
+            int countUsers = baseDatos.getCountUsersServizo(oferta.getIdServizo());
+            if(countUsers >= oferta.getNumUsuarios()){
+                baseDatos.setServizoInvisible(oferta.getIdServizo());
+            }
+        }
+    }
+
     public void checkDate(){
         baseDatos = new BBDD(this);
         baseDatos.getReadableDatabase();
@@ -105,16 +118,26 @@ public class Ofertas extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent demandasIntent = new Intent(this,Demandas.class);
         Intent selfIntent = new Intent(this,MeusServizos.class);
+        Intent otherServices = new Intent(this,ServizosAceptados.class);
+        Intent perfilIntent = new Intent(this,Perfil.class);
         switch (item.getItemId()) {
             case R.id.action_bar_demandas:
                 startActivity(demandasIntent);
                 return true;
             case R.id.action_bar_self_services:
                 startActivity(selfIntent);
+                return true;
+            case R.id.other_services:
+                startActivity(otherServices);
+                return true;
+            case R.id.action_bar_perfil:
+                startActivity(perfilIntent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

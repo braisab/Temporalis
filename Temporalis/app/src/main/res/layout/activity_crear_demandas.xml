@@ -9,30 +9,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Título"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:id="@+id/eTextDemTitulo"
         android:layout_gravity="center_horizontal"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Descrición"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:id="@+id/eTextDemDescricion"
         android:layout_gravity="center_horizontal"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Data"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:id="@+id/eTextDemData"
         android:layout_gravity="center_horizontal"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Hora"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:id="@+id/eTextDemHora"
         android:layout_gravity="center_horizontal"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Lugar"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:id="@+id/eDemLugar"
         android:layout_gravity="center_horizontal"/>
     <EditText
@@ -47,12 +57,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Num Persoas"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:id="@+id/eDemMaxUsers"
         android:layout_gravity="center_horizontal"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crear Demanda"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:id="@+id/btnCrearDem"
         android:layout_gravity="center_horizontal"/>
 

@@ -25,5 +25,7 @@
         <activity android:name=".Oferta"/>
         <activity android:name=".Demanda"/>
         <activity android:name=".MeusServizos" />
+        <activity android:name=".ServizosAceptados" />
+        <activity android:name=".Perfil" />
     </application>
 </manifest>

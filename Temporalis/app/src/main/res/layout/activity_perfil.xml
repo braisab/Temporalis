@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background= "@drawable/degrade">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="78dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/sin_foto"/>
+
+    <TextView
+        android:id="@+id/txtSaldoHoras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/imageView"
+        android:text="SALDO DE HORAS: "
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textViewSaldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/txtSaldoHoras"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="-27dp"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/txtViewNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:text="Nome de usuario:"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/eTextNomePerfil"
+        android:layout_width="157dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/txtSaldoHoras"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="51dp"
+        android:layout_toRightOf="@+id/txtViewNome"
+        android:enabled="false"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/txtCorreo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtViewNome"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Correo-e:"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/eTextCorreoPerfil"
+        android:layout_width="157dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/eTextNomePerfil"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@+id/txtCorreo"
+        android:enabled="false"
+        android:textSize="16dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/txtTelefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCorreo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Teléfono:"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/eTextTelefonoPerfil"
+        android:layout_width="157dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/eTextCorreoPerfil"
+        android:layout_marginStart="129dp"
+        android:layout_marginLeft="129dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/txtTelefono"
+        android:enabled="false"
+        android:inputType="phone"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/txtZona"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTelefono"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Zona: "
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/eTextZonaPerfil"
+        android:layout_width="157dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/eTextTelefonoPerfil"
+        android:layout_marginStart="149dp"
+        android:layout_marginLeft="149dp"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/txtZona"
+        android:enabled="false"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/txtPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtZona"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Intereses e coñecementos: "
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/eTextPerfil"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eTextZonaPerfil"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="17dp"
+        android:layout_toRightOf="@+id/txtPerfil"
+        android:enabled="false"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/btnEditarPerfi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPerfil"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:text="Editar Perfil" />
+
+    <Button
+        android:id="@+id/btnCancelarEdicion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPerfil"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="4dp"
+        android:background="@color/red"
+        android:visibility="invisible"
+        android:layout_toRightOf="@id/btnEditarPerfi"
+        android:text="Cancelar" />
+</RelativeLayout>

@@ -143,6 +143,18 @@ public class BBDD extends SQLiteOpenHelper {
         return maxId;
     }
 
+    public int getCountUsersServizo(int idServizo){
+        sqLite = getReadableDatabase();
+        String sIdServizo = idServizo + "";
+        String [] param = {sIdServizo};
+        int countUsers = 0;
+        Cursor cursor = sqLite.rawQuery("SELECT COUNT(idUsuarioCliente) FROM EMPREGASERVIZO WHERE idServizo = ?", param);
+        if(cursor.moveToFirst()){
+            countUsers = cursor.getInt(0);
+        }
+        return countUsers;
+    }
+
     public int getUserId(String nomeUsuario){
         sqLite = getReadableDatabase();
         String [] nome = {nomeUsuario};
@@ -150,6 +162,29 @@ public class BBDD extends SQLiteOpenHelper {
         cursor.moveToFirst();
         int id = cursor.getInt(0);
         return id;
+    }
+
+    public Usuario getUsuario(String nomeUsuario){
+        sqLite = getReadableDatabase();
+        String[] nome = {nomeUsuario};
+        Cursor cursor = sqLite.rawQuery("SELECT * FROM USUARIO WHERE nomeUsuario = ?", nome);
+        cursor.moveToFirst();
+        int idUsuario = cursor.getInt(0);
+        String nomeU = cursor.getString(1);
+        String contrasinal = cursor.getString(2);
+        String correo = cursor.getString(3);
+        int telefono = cursor.getInt(4);
+        String lugar = cursor.getString(5);
+        String perfil = cursor.getString(6);
+        int horas = cursor.getInt(7);
+        Usuario usuario = new Usuario(idUsuario,nomeU,contrasinal,correo,telefono,perfil,lugar,horas);
+        return usuario;
+    }
+
+    public void gardarPerfil(String idUsuario, String nome, String correo, String telefono, String zona, String perfil){
+        sqLite = getWritableDatabase();
+        String [] params = {nome,correo,telefono,zona,perfil, idUsuario};
+        sqLite.execSQL("UPDATE USUARIO SET NomeUsuario = ?, Correoe = ?, Telefono = ?, Localizacion = ?, Perfil = ? WHERE IdUSUARIO = ?",params);
     }
 
     public int getMaxServizoId(){
@@ -365,5 +400,62 @@ public class BBDD extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
         return servizos;
+    }
+
+    public ArrayList<Integer> getIdServizosEmpSer(int idUsuario){
+        sqLite = getReadableDatabase();
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sIdUsuario = idUsuario +"";
+        String[] param = {sIdUsuario};
+        Cursor cursor = sqLite.rawQuery("SELECT idServizo FROM EMPREGASERVIZO WHERE idUsuarioCliente = ?", param);
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                int id = cursor.getInt(0);
+                ids.add(id);
+                cursor.moveToNext();
+            }
+        }
+        return ids;
+    }
+
+    public Servizo getServizoAceptado(int idServizo){
+        sqLite = getReadableDatabase();
+        String sIdServizo = idServizo + "";
+        String [] param = {sIdServizo};
+        Servizo servizo = new Servizo();
+        Cursor cursor = sqLite.rawQuery("SELECT * FROM SERVIZO WHERE idServizo = ?", param);
+        if(cursor.moveToFirst()){
+            while (!cursor.isAfterLast()){
+                servizo.setIdServizo(cursor.getInt(0));
+                servizo.setTitulo(cursor.getString(1));
+                servizo.setDescricion(cursor.getString(2));
+                servizo.setNumUsuarios(cursor.getInt(3));
+                servizo.setData(cursor.getString(4));
+                servizo.setHora(cursor.getString(5));
+                servizo.setLugar(cursor.getString(6));
+                servizo.setUsuarioCreador(cursor.getInt(7));
+                servizo.setTipo(Boolean.parseBoolean(cursor.getString(8)));
+                servizo.setVisible(Boolean.parseBoolean(cursor.getString(9)));
+                servizo.setTempoServizo(cursor.getInt(10));
+                cursor.moveToNext();
+            }
+        }
+        return servizo;
+    }
+
+    public ArrayList<Integer> getIdUsuariosClientes(int idServizo){
+        sqLite = getReadableDatabase();
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sIdServizo = idServizo + "";
+        String [] param = {sIdServizo};
+        Cursor cursor = sqLite.rawQuery("SELECT idUsuarioCliente FROM EMPREGASERVIZO WHERE idServizo = ?", param);
+        if(cursor.moveToFirst()){
+            while (!cursor.isAfterLast()){
+                int idUsuarioCliente = cursor.getInt(0);
+                ids.add(idUsuarioCliente);
+                cursor.moveToNext();
+            }
+        }
+        return ids;
     }
 }

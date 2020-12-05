@@ -1,10 +1,8 @@
-
 package com.example.temporalis;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class MeusServizos extends AppCompatActivity {
-    public BBDD baseDatos;
-
+public class ServizosAceptados extends AppCompatActivity {
+    BBDD baseDatos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +30,14 @@ public class MeusServizos extends AppCompatActivity {
     public void cargarListView(){
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
+        ArrayList<Servizo> servizos = new ArrayList<>();
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
-        final ArrayList<Servizo> servizos = baseDatos.getMeusServizos(idUsuario);
+        ArrayList<Integer> idsServizos = baseDatos.getIdServizosEmpSer(idUsuario);
+        for(int idServizo : idsServizos){
+            Servizo servizo = baseDatos.getServizoAceptado(idServizo);
+            servizos.add(servizo);
+        }
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listView = findViewById(R.id.listViewOfertas);
         arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,servizos) {
@@ -61,7 +63,7 @@ public class MeusServizos extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent ofertasIntent = new Intent(this,Ofertas.class);
         Intent demandasIntent = new Intent(this,Demandas.class);
-        Intent otherServices = new Intent(this,ServizosAceptados.class);
+        Intent selfIntent = new Intent(this,MeusServizos.class);
         Intent perfilIntent = new Intent(this,Perfil.class);
         switch (item.getItemId()) {
             case R.id.action_bar_ofertas:
@@ -70,8 +72,8 @@ public class MeusServizos extends AppCompatActivity {
             case R.id.action_bar_demandas:
                 startActivity(demandasIntent);
                 return true;
-            case R.id.other_services:
-                startActivity(otherServices);
+            case R.id.action_bar_self_services:
+                startActivity(selfIntent);
                 return true;
             case R.id.action_bar_perfil:
                 startActivity(perfilIntent);
@@ -81,4 +83,3 @@ public class MeusServizos extends AppCompatActivity {
         }
     }
 }
-

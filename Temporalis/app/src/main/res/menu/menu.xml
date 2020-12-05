@@ -10,5 +10,5 @@
             <item android:title="Ofertas/demandas aceptadas"
                 android:id="@+id/other_services"/>
             <item android:title="Perfil"
-                android:id="@+id/perfil"/>
+                android:id="@+id/action_bar_perfil"/>
         </menu>
