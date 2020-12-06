@@ -13,12 +13,34 @@
         android:text="Crear Oferta"
         android:gravity="center"
         android:background="@drawable/boton_redondo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:textColor="@color/white"
+        android:text="OFERTAS:"
+        android:id="@+id/txtOfertas"/>
+
+    <ListView
+        android:id="@+id/listViewOfertas"
+        android:layout_width="wrap_content"
+        android:layout_height="178dp"
+        android:layout_margin="15dp"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDemandas"
+        android:textColor="@color/white"
+        android:text="DEMANDAS:"
+        android:textSize="17dp"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listViewOfertas"
+        android:id="@+id/listViewDemandas"
         android:layout_margin="15dp"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 
 </LinearLayout>

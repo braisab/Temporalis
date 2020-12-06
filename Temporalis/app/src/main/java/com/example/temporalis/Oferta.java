@@ -36,10 +36,30 @@ public class Oferta extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oferta);
-        TextView textView = findViewById(R.id.txtViewOferta);
-        textView.setText(Ofertas.getInstance().oferta.toString());
+        TextView textView = findViewById(R.id.txtTitulo);
+        textView.setText(Ofertas.getInstance().oferta.getTitulo());
+        TextView textViewData = findViewById(R.id.txtData);
+        textViewData.setText(Ofertas.getInstance().oferta.getData());
+        TextView textViewHora = findViewById(R.id.txtHora);
+        textViewHora.setText(Ofertas.getInstance().oferta.getHora());
+        TextView textViewLugar = findViewById(R.id.txtLugar);
+        textViewLugar.setText(Oferta.getInstance().oferta.getLugar());
+        TextView textViewDuracion = findViewById(R.id.txtDuracion);
+        int duracion = Oferta.getInstance().oferta.getTempoServizo();
+        String sDuracion = duracion+"";
+        textViewDuracion.setText(sDuracion);
+        TextView textViewCreador = findViewById(R.id.txtCreador);
+        String nomeCreador = baseDatos.getNomeUsuario(Oferta.getInstance().oferta.getUsuarioCreador());
+        textViewCreador.setText(nomeCreador);
+        TextView textViewClientes = findViewById(R.id.txtClientes);
+        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(Oferta.getInstance().oferta.getIdServizo());
+        for(int idCliente : idsClientes){
+            textViewClientes.append(baseDatos.getNomeUsuario(idCliente)+",");
+        }
         xestionarBoton();
     }
 
@@ -99,6 +119,8 @@ public class Oferta extends AppCompatActivity {
     }
 
     public boolean isDatePass(){
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
         boolean isDatePass= false;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -106,8 +128,12 @@ public class Oferta extends AppCompatActivity {
             Date today = dateFormat.parse(sToday);
             String data = oferta.getData();
             String hora = oferta.getHora();
+            int duracionServizo = oferta.getTempoServizo();
             Date dataServizo = dateFormat.parse(data+ " "+hora);
-                if (today.after(dataServizo)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataServizo);
+            cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)+duracionServizo);
+                if (today.after(cal.getTime())) {
                     isDatePass = true;
                 }
 
@@ -115,7 +141,6 @@ public class Oferta extends AppCompatActivity {
             Log.e("Erro", "Erro no parsing da data");
         }return isDatePass;
     }
-
 
     public void lanzarDialogBorrar(){
         Intent intentOfertas = new Intent(this,Ofertas.class);

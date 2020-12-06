@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,15 +28,20 @@ public class MeusServizos extends AppCompatActivity {
         setContentView(R.layout.activity_ofertas);
         Button btnOfertas = findViewById(R.id.btnCrearOferta);
         btnOfertas.setVisibility(View.INVISIBLE);
-        cargarListView();
+        TextView txtOfertas = findViewById(R.id.txtOfertas);
+        TextView txtDemandas = findViewById(R.id.txtDemandas);
+        txtDemandas.setVisibility(View.VISIBLE);
+        txtOfertas.setVisibility(View.VISIBLE);
+        cargarListViewOfertas();
+        cargarListViewDemandas();
     }
 
-    public void cargarListView(){
+    public void cargarListViewOfertas(){
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
-        final ArrayList<Servizo> servizos = baseDatos.getMeusServizos(idUsuario);
+        final ArrayList<Servizo> servizos = baseDatos.getMiñasOfertas(idUsuario);
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listView = findViewById(R.id.listViewOfertas);
         arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,servizos) {
@@ -49,6 +55,42 @@ public class MeusServizos extends AppCompatActivity {
             }
         };
         listView.setAdapter(arrayAdapter);
+        Intent ofertaIntent = new Intent(this, Oferta.class);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //startActivity(ofertaIntent);
+            }
+        });
+    }
+
+
+    public void cargarListViewDemandas(){
+        baseDatos = new BBDD(this);
+        baseDatos.getWritableDatabase();
+        String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
+        int idUsuario = baseDatos.getUserId(nomeUsuario);
+        final ArrayList<Servizo> servizos = baseDatos.getMiñasDemandas(idUsuario);
+        ArrayAdapter<Servizo> arrayAdapter;
+        ListView listViewDemandas = findViewById(R.id.listViewDemandas);
+        arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,servizos) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+                TextView textView= view.findViewById(android.R.id.text1);
+                textView.setTextColor(Color.WHITE);
+                return view;
+            }
+        };
+        listViewDemandas.setAdapter(arrayAdapter);
+        Intent demandaIntent = new Intent(this, Demanda.class);
+        listViewDemandas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //startActivity(demandaIntent);
+            }
+        });
     }
 
     @Override

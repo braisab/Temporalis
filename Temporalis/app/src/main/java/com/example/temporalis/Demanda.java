@@ -29,10 +29,31 @@ public class Demanda extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oferta);
-        TextView textView = findViewById(R.id.txtViewOferta);
-        textView.setText(Demandas.getInstance().demanda.toString());
+        TextView textView = findViewById(R.id.txtTitulo);
+        textView.setText(Demandas.getInstance().demanda.getTitulo());
+        TextView textViewData = findViewById(R.id.txtData);
+        textViewData.setText(Demandas.getInstance().demanda.getData());
+        TextView textViewHora = findViewById(R.id.txtHora);
+        textViewHora.setText(Demandas.getInstance().demanda.getHora());
+        TextView textViewLugar = findViewById(R.id.txtLugar);
+        textViewLugar.setText(Demandas.getInstance().demanda.getLugar());
+        TextView textViewDuracion = findViewById(R.id.txtDuracion);
+        int duracion = Demandas.getInstance().demanda.getTempoServizo();
+        String sDuracion = duracion+"";
+        textViewDuracion.setText(sDuracion);
+        TextView textViewCreador = findViewById(R.id.txtCreador);
+        int idCreador = Demandas.getInstance().demanda.getUsuarioCreador();
+        String nomeCreador = baseDatos.getNomeUsuario(idCreador);
+        textViewCreador.setText(nomeCreador);
+        TextView textViewClientes = findViewById(R.id.txtClientes);
+        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(Demandas.getInstance().demanda.getIdServizo());
+        for(int idCliente : idsClientes){
+            textViewClientes.append(baseDatos.getNomeUsuario(idCliente)+",");
+        }
         xestionarBoton();
     }
 
@@ -89,6 +110,8 @@ public class Demanda extends AppCompatActivity {
     }
 
     public boolean isDatePass(){
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
         boolean isDatePass= false;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -96,8 +119,12 @@ public class Demanda extends AppCompatActivity {
             Date today = dateFormat.parse(sToday);
             String data = demanda.getData();
             String hora = demanda.getHora();
+            int duracionServizo = demanda.getTempoServizo();
             Date dataServizo = dateFormat.parse(data+ " "+hora);
-            if (today.after(dataServizo)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataServizo);
+            cal.set(Calendar.HOUR, cal.get(Calendar.HOUR)+duracionServizo);
+            if (today.after(cal.getTime())) {
                 isDatePass = true;
             }
 

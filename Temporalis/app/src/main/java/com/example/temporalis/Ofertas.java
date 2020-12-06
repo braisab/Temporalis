@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,12 @@ public class Ofertas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ofertas);
+        TextView txtOfertas = findViewById(R.id.txtOfertas);
+        TextView txtDemandas = findViewById(R.id.txtDemandas);
+        txtDemandas.setVisibility(View.INVISIBLE);
+        txtOfertas.setVisibility(View.INVISIBLE);
+        ListView listViewOfertas = findViewById(R.id.listViewOfertas);
+        listViewOfertas.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         checkMaxUsers();
         checkDate();
         cargarListView();
