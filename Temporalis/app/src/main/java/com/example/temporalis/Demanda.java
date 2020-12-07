@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Demanda extends AppCompatActivity {
-    Servizo demanda = Demandas.getInstance().demanda;
+    Servizo demanda;
     public BBDD baseDatos;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -33,24 +33,31 @@ public class Demanda extends AppCompatActivity {
         baseDatos.getReadableDatabase();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oferta);
+        String intentAnterior = getIntent().getExtras().get("uniqueId").toString();
+        if(intentAnterior.equals("intentDemandas")){
+            demanda = (Servizo)getIntent().getSerializableExtra("intentDeDemanda");
+        }
+        if(intentAnterior.equals("intentDemandasMeusServizos")){
+            demanda = (Servizo)getIntent().getSerializableExtra("intentDeDemandaMS");
+        }
         TextView textView = findViewById(R.id.txtTitulo);
-        textView.setText(Demandas.getInstance().demanda.getTitulo());
+        textView.setText(demanda.getTitulo());
         TextView textViewData = findViewById(R.id.txtData);
-        textViewData.setText(Demandas.getInstance().demanda.getData());
+        textViewData.setText(demanda.getData());
         TextView textViewHora = findViewById(R.id.txtHora);
-        textViewHora.setText(Demandas.getInstance().demanda.getHora());
+        textViewHora.setText(demanda.getHora());
         TextView textViewLugar = findViewById(R.id.txtLugar);
-        textViewLugar.setText(Demandas.getInstance().demanda.getLugar());
+        textViewLugar.setText(demanda.getLugar());
         TextView textViewDuracion = findViewById(R.id.txtDuracion);
-        int duracion = Demandas.getInstance().demanda.getTempoServizo();
+        int duracion = demanda.getTempoServizo();
         String sDuracion = duracion+"";
         textViewDuracion.setText(sDuracion);
         TextView textViewCreador = findViewById(R.id.txtCreador);
-        int idCreador = Demandas.getInstance().demanda.getUsuarioCreador();
+        int idCreador = demanda.getUsuarioCreador();
         String nomeCreador = baseDatos.getNomeUsuario(idCreador);
         textViewCreador.setText(nomeCreador);
         TextView textViewClientes = findViewById(R.id.txtClientes);
-        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(Demandas.getInstance().demanda.getIdServizo());
+        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(demanda.getIdServizo());
         for(int idCliente : idsClientes){
             textViewClientes.append(baseDatos.getNomeUsuario(idCliente)+",");
         }

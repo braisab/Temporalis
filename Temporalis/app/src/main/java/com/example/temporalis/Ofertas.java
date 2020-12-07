@@ -61,9 +61,9 @@ public class Ofertas extends AppCompatActivity {
     }
 
     public void cargarListView(){
-        final Intent ofertaIntent = new Intent(this,Oferta.class);
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
+        final Intent ofertaIntent = new Intent(this,Oferta.class);
         final ArrayList<Servizo> ofertas = baseDatos.getOfertasVisibles();
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listView = findViewById(R.id.listViewOfertas);
@@ -82,6 +82,8 @@ public class Ofertas extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 oferta = ofertas.get(position);
+                ofertaIntent.putExtra("uniqueId", "intentOfertas");
+                ofertaIntent.putExtra("intentDeOferta", oferta);
                 startActivity(ofertaIntent);
             }
         });

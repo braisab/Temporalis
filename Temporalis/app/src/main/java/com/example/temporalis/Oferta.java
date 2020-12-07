@@ -1,7 +1,13 @@
 package com.example.temporalis;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +22,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ShareCompat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,8 +32,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Oferta extends AppCompatActivity {
-    Servizo oferta = Ofertas.getInstance().oferta;
+    Servizo oferta;
     public BBDD baseDatos;
+    final int CODIGO = 1;
     private static Oferta myContext;
     public Oferta() {
         myContext =  this;
@@ -33,6 +42,7 @@ public class Oferta extends AppCompatActivity {
     public static Oferta getInstance() {
         return myContext;
     }
+    ArrayList<Integer> idsClientes;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,28 +50,165 @@ public class Oferta extends AppCompatActivity {
         baseDatos.getReadableDatabase();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oferta);
+        String intentAnterior = getIntent().getExtras().get("uniqueId").toString();
+        if(intentAnterior.equals("intentOfertas")){
+            oferta = (Servizo)getIntent().getSerializableExtra("intentDeOferta");
+        }
+        if(intentAnterior.equals("intentMeusServizos")){
+            oferta = (Servizo)getIntent().getSerializableExtra("intentDeMeusServizos");
+        }
+        String sIdCeador = Login.getInstance().eTextUser.getText().toString();
+        int idUsuarioLogeado = baseDatos.getUserId(sIdCeador);
+        int idUsuario = oferta.getUsuarioCreador();
         TextView textView = findViewById(R.id.txtTitulo);
-        textView.setText(Ofertas.getInstance().oferta.getTitulo());
+        textView.setText(oferta.getTitulo());
         TextView textViewData = findViewById(R.id.txtData);
-        textViewData.setText(Ofertas.getInstance().oferta.getData());
+        textViewData.setText(oferta.getData());
         TextView textViewHora = findViewById(R.id.txtHora);
-        textViewHora.setText(Ofertas.getInstance().oferta.getHora());
+        textViewHora.setText(oferta.getHora());
         TextView textViewLugar = findViewById(R.id.txtLugar);
-        textViewLugar.setText(Oferta.getInstance().oferta.getLugar());
+        textViewLugar.setText(oferta.getLugar());
         TextView textViewDuracion = findViewById(R.id.txtDuracion);
-        int duracion = Oferta.getInstance().oferta.getTempoServizo();
-        String sDuracion = duracion+"";
+        int duracion = oferta.getTempoServizo();
+        String sDuracion = duracion+" horas";
         textViewDuracion.setText(sDuracion);
         TextView textViewCreador = findViewById(R.id.txtCreador);
-        String nomeCreador = baseDatos.getNomeUsuario(Oferta.getInstance().oferta.getUsuarioCreador());
+        String nomeCreador = baseDatos.getNomeUsuario(oferta.getUsuarioCreador());
         textViewCreador.setText(nomeCreador);
         TextView textViewClientes = findViewById(R.id.txtClientes);
-        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(Oferta.getInstance().oferta.getIdServizo());
+        idsClientes = baseDatos.getIdUsuariosClientes(oferta.getIdServizo());
         for(int idCliente : idsClientes){
             textViewClientes.append(baseDatos.getNomeUsuario(idCliente)+",");
         }
+        if(idUsuarioLogeado == idUsuario) {
+            textViewClientes.setTextColor(getResources().getColor(R.color.purple_500));
+            textViewClientes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogoClientes();
+                }
+            });
+        }else{
+            textViewCreador.setTextColor(getResources().getColor(R.color.purple_500));
+        }
         xestionarBoton();
     }
+
+
+        public void lanzarDialogoClientes() {
+            baseDatos = new BBDD(this);
+            baseDatos.getReadableDatabase();
+            ArrayList<String> nomes = new ArrayList<>();
+            for(int idCliente : idsClientes){
+                nomes.add(baseDatos.getNomeUsuario(idCliente));
+            }
+            String [] array = new String[nomes.size()];
+            array = nomes.toArray(array);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String[] finalArray = array;
+            builder.setTitle("Clientes")
+                    .setItems(array, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String nome = finalArray[which];
+                            lanzarDialogContactos(nome);
+                        }
+                    });
+            AlertDialog alert11 = builder.create();
+            alert11.show();
+        }
+
+        public void lanzarDialogContactos(String nomeUsuario){
+            baseDatos = new BBDD(this);
+            baseDatos.getReadableDatabase();
+            Intent correoIntent = new Intent(this,MandarCorreo.class);
+            Usuario usuario = baseDatos.getUsuario(nomeUsuario);
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(Oferta.getInstance());
+            builder1.setMessage("Como quere contactar?");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton(
+                    "Chamar teléfono",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            if (Build.VERSION.SDK_INT >= 23) {
+                                int permiso = checkSelfPermission(Manifest.permission.CALL_PHONE);
+                                if (permiso == PackageManager.PERMISSION_GRANTED) {
+                                    chamarTelefono(usuario.getTelefono());
+                                } else {
+                                    Oferta.this.requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, CODIGO);
+                                }
+                            } else {
+                                chamarTelefono(usuario.getTelefono());
+                            }
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "Enviar Mensaxe",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            onClickWhatsApp();
+                        }
+                    });
+            builder1.setNeutralButton(
+                    "Enviar Correo",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            correoIntent.putExtra("correoUsuario", usuario.getCorreoe());
+                            startActivity(correoIntent);
+                        }
+                    });
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+
+    public void onClickWhatsApp() {
+
+        PackageManager pm = getPackageManager();
+        try {
+
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+            String text = "YOUR TEXT HERE";
+
+            PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            //Check if package exists or not. If not then code
+            //in catch block will be called
+            waIntent.setPackage("com.whatsapp");
+
+            waIntent.putExtra(Intent.EXTRA_TEXT, text);
+            startActivity(Intent.createChooser(waIntent, "Share with"));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+
+    private void chamarTelefono(int telefono) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + telefono));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startActivity(callIntent);
+    }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+//        switch (requestCode) {
+//            case CODIGO: {
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    chamarTelefono();
+//                } else {
+//                    Toast.makeText(this, "Precisas permisos para chamar",Toast.LENGTH_LONG).show();
+//                }
+//                return;
+//            }
+//        }
+//    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void xestionarBoton(){
@@ -69,9 +216,9 @@ public class Oferta extends AppCompatActivity {
         baseDatos.getWritableDatabase();
         Button btnOferta = findViewById(R.id.btnServizo);
         String sIdCeador = Login.getInstance().eTextUser.getText().toString();
-        int idCreador = baseDatos.getUserId(sIdCeador);
+        int idUsuarioLogeado = baseDatos.getUserId(sIdCeador);
         int idUsuario = oferta.getUsuarioCreador();
-        if(idUsuario== idCreador){
+        if(idUsuario== idUsuarioLogeado){
             btnOferta.setText("Borrar Oferta");
             btnOferta.setBackgroundColor(getColor(R.color.red));
             btnOferta.setOnClickListener(new View.OnClickListener() {
@@ -81,12 +228,12 @@ public class Oferta extends AppCompatActivity {
                 }
             });
         }
-        if(idUsuario == idCreador && isDatePass()){
+        if(idUsuario == idUsuarioLogeado && isDatePass()){
             btnOferta.setVisibility(View.INVISIBLE);
         }
         int idServizo = oferta.getIdServizo();
-        boolean existeEmpSer = baseDatos.checkEmpregaServizo(idCreador, idServizo);
-        if(idUsuario != idCreador && !existeEmpSer){
+        boolean existeEmpSer = baseDatos.checkEmpregaServizo(idUsuarioLogeado, idServizo);
+        if(idUsuario != idUsuarioLogeado && !existeEmpSer){
             btnOferta.setText("Interésame");
             btnOferta.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,7 +242,7 @@ public class Oferta extends AppCompatActivity {
                 }
             });
         }
-        if(idUsuario != idCreador && existeEmpSer && !isDatePass()){
+        if(idUsuario != idUsuarioLogeado && existeEmpSer && !isDatePass()){
             btnOferta.setText("Cancelar");
             btnOferta.setBackgroundColor(getColor(R.color.red));
             btnOferta.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +252,7 @@ public class Oferta extends AppCompatActivity {
                 }
             });
         }
-        if(idUsuario != idCreador && existeEmpSer && isDatePass()){
+        if(idUsuario != idUsuarioLogeado && existeEmpSer && isDatePass()){
             btnOferta.setText("Pagar");
             btnOferta.setTextColor(getColor(R.color.black));
             btnOferta.setBackgroundColor(getColor(R.color.yellow));

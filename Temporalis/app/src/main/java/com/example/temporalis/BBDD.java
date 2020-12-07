@@ -496,6 +496,4 @@ public class BBDD extends SQLiteOpenHelper {
         }
         return servizo;
     }
-
-
 }

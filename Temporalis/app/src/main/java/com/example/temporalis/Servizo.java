@@ -1,6 +1,8 @@
 package com.example.temporalis;
 
-public class Servizo {
+import java.io.Serializable;
+
+public class Servizo implements Serializable {
     private int idServizo;
     private String titulo;
     private String descricion;

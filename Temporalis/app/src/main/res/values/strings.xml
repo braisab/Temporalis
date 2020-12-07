@@ -28,4 +28,9 @@
         <item>Vidán</item>
         <item>Villestro</item>
     </string-array>
+    <string name="texto_ec">Enviar Correo</string>
+    <string name="texto_correo">Enviar a:</string>
+    <string name="texto_asunto">Asunto:</string>
+    <string name="texto_mensaje">Mensaxe:</string>
+    <string name="texto_btn_enviar">Enviar</string>
 </resources>

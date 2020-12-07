@@ -76,6 +76,8 @@ public class Demandas extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 demanda = demandas.get(position);
+                demandaIntent.putExtra("uniqueId", "IntentDemandas");
+                demandaIntent.putExtra("intentDeDemanda", demanda);
                 startActivity(demandaIntent);
             }
         });

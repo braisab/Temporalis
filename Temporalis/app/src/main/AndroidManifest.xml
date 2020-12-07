@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.temporalis">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -27,5 +29,6 @@
         <activity android:name=".MeusServizos" />
         <activity android:name=".ServizosAceptados" />
         <activity android:name=".Perfil" />
+        <activity android:name=".MandarCorreo" />
     </application>
 </manifest>

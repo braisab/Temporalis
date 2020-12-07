@@ -21,7 +21,15 @@ import java.util.ArrayList;
 
 public class MeusServizos extends AppCompatActivity {
     public BBDD baseDatos;
-
+    private static MeusServizos myContext;
+    public MeusServizos() {
+        myContext =  this;
+    }
+    public static MeusServizos getInstance() {
+        return myContext;
+    }
+    public Servizo oferta;
+    public Servizo demanda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +67,10 @@ public class MeusServizos extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //startActivity(ofertaIntent);
+                oferta = servizos.get(position);
+                ofertaIntent.putExtra("uniqueId", "intentMeusServizos");
+                ofertaIntent.putExtra("intentDeMeusServizos", oferta);
+                startActivity(ofertaIntent);
             }
         });
     }
@@ -88,7 +99,10 @@ public class MeusServizos extends AppCompatActivity {
         listViewDemandas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //startActivity(demandaIntent);
+                demanda = servizos.get(position);
+                demandaIntent.putExtra("uniqueId", "intentDemandasMeusServizos");
+                demandaIntent.putExtra("intentDeDemandaMS", demanda);
+                startActivity(demandaIntent);
             }
         });
     }
