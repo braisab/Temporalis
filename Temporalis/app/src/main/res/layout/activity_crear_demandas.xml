@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:hint="Data"
         android:textColor="@color/white"
+        android:inputType="date"
         android:textColorHint="@color/white"
         android:id="@+id/eTextDemData"
         android:layout_gravity="center_horizontal"/>
@@ -35,6 +36,7 @@
         android:hint="Hora"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
+        android:inputType="datetime"
         android:id="@+id/eTextDemHora"
         android:layout_gravity="center_horizontal"/>
     <EditText
@@ -52,12 +54,14 @@
         android:id="@+id/eTextDemTempo"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
+        android:inputType="number"
         android:layout_gravity="center_horizontal"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Num Persoas"
         android:textColor="@color/white"
+        android:inputType="number"
         android:textColorHint="@color/white"
         android:id="@+id/eDemMaxUsers"
         android:layout_gravity="center_horizontal"/>

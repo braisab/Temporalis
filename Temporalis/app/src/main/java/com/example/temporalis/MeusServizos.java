@@ -4,7 +4,6 @@ package com.example.temporalis;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,13 +20,6 @@ import java.util.ArrayList;
 
 public class MeusServizos extends AppCompatActivity {
     public BBDD baseDatos;
-    private static MeusServizos myContext;
-    public MeusServizos() {
-        myContext =  this;
-    }
-    public static MeusServizos getInstance() {
-        return myContext;
-    }
     public Servizo oferta;
     public Servizo demanda;
     @Override
@@ -49,7 +41,7 @@ public class MeusServizos extends AppCompatActivity {
         baseDatos.getWritableDatabase();
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
-        final ArrayList<Servizo> servizos = baseDatos.getMiñasOfertas(idUsuario);
+        final ArrayList<Servizo> servizos = baseDatos.getMinhasOfertas(idUsuario);
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listView = findViewById(R.id.listViewOfertas);
         arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,servizos) {
@@ -81,7 +73,7 @@ public class MeusServizos extends AppCompatActivity {
         baseDatos.getWritableDatabase();
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
-        final ArrayList<Servizo> servizos = baseDatos.getMiñasDemandas(idUsuario);
+        final ArrayList<Servizo> servizos = baseDatos.getMinhasDemandas(idUsuario);
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listViewDemandas = findViewById(R.id.listViewDemandas);
         arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,servizos) {

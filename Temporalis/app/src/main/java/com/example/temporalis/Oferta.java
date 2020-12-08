@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class Oferta extends AppCompatActivity {
     Servizo oferta;
@@ -57,9 +67,14 @@ public class Oferta extends AppCompatActivity {
         if(intentAnterior.equals("intentMeusServizos")){
             oferta = (Servizo)getIntent().getSerializableExtra("intentDeMeusServizos");
         }
+        if(intentAnterior.equals("intentDeOutrasOfertas")){
+            oferta = (Servizo)getIntent().getSerializableExtra("intentOutrasOfertas");
+        }
         String sIdCeador = Login.getInstance().eTextUser.getText().toString();
         int idUsuarioLogeado = baseDatos.getUserId(sIdCeador);
         int idUsuario = oferta.getUsuarioCreador();
+        int idServizo = oferta.getIdServizo();
+        boolean existeEmpSer = baseDatos.checkEmpregaServizo(idUsuarioLogeado, idServizo);
         TextView textView = findViewById(R.id.txtTitulo);
         textView.setText(oferta.getTitulo());
         TextView textViewData = findViewById(R.id.txtData);
@@ -88,8 +103,15 @@ public class Oferta extends AppCompatActivity {
                     lanzarDialogoClientes();
                 }
             });
-        }else{
+        }
+        if(idUsuarioLogeado != idUsuario && existeEmpSer){
             textViewCreador.setTextColor(getResources().getColor(R.color.purple_500));
+            textViewCreador.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogContactos(nomeCreador);
+                }
+            });
         }
         xestionarBoton();
     }
@@ -171,8 +193,6 @@ public class Oferta extends AppCompatActivity {
             String text = "YOUR TEXT HERE";
 
             PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-            //Check if package exists or not. If not then code
-            //in catch block will be called
             waIntent.setPackage("com.whatsapp");
 
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
@@ -283,24 +303,38 @@ public class Oferta extends AppCompatActivity {
                 if (today.after(cal.getTime())) {
                     isDatePass = true;
                 }
-
         }catch (ParseException e){
             Log.e("Erro", "Erro no parsing da data");
         }return isDatePass;
     }
 
     public void lanzarDialogBorrar(){
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
         Intent intentOfertas = new Intent(this,Ofertas.class);
         AlertDialog.Builder builder1 = new AlertDialog.Builder(Oferta.getInstance());
-        builder1.setMessage("Quere borrar esta oferta?");
+        builder1.setTitle("Quere borrar esta oferta?");
+        builder1.setMessage("Ao premer \'Si\' enviaráselle un correo de aviso a todos os usuarios que aceptaron esta oferta");
         builder1.setCancelable(true);
         builder1.setPositiveButton(
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String user = "braisterbutalino@gmail.com";
+                        String passwd = "Arnelinha2013";
                         baseDatos.borrarServizo(oferta.getIdServizo());
                         Toast.makeText(Oferta.this, "Oferta borrada", Toast.LENGTH_SHORT).show();
                         startActivity(intentOfertas);
+                        String nomeCreador = baseDatos.getNomeUsuario(oferta.getUsuarioCreador());
+                        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(oferta.getIdServizo());
+                        if (idsClientes.size() > 0) {
+                            for (int idCliente : idsClientes) {
+                                String correoUsuario = baseDatos.getCorreoUsuario(idCliente);
+                                new MailJob(user, passwd).execute(
+                                        new MailJob.Mail("braisterbutalino@gmail.com", correoUsuario, "Temporalis: Oferta Borrada", "O usuario " + nomeCreador + " borrou a oferta " + oferta.getTitulo() + " con data " + oferta.getData() + " " + oferta.getHora())
+                                );
+                            }
+                        }
                     }
                 });
 
@@ -421,6 +455,65 @@ public class Oferta extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static class MailJob extends AsyncTask<MailJob.Mail,Void,Void> {
+        private  String user;
+        private  String pass;
+
+        public MailJob(String user, String pass) {
+            super();
+            this.user = user;
+            this.pass = pass;
+        }
+
+        @Override
+        protected Void doInBackground(Mail... mails) {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(user, pass);
+                        }
+                    });
+            for (Mail mail:mails) {
+
+                try {
+
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(mail.from));
+                    message.setRecipients(Message.RecipientType.TO,
+                            InternetAddress.parse(mail.to));
+                    message.setSubject(mail.subject);
+                    message.setText(mail.content);
+
+                    Transport.send(message);
+
+                } catch (MessagingException e) {
+                    Log.d("MailJob", e.getMessage());
+                }
+            }
+            return null;
+        }
+
+        public static class Mail{
+            private final String subject;
+            private final String content;
+            private final String from;
+            private final String to;
+
+            public Mail(String from, String to, String subject, String content){
+                this.subject=subject;
+                this.content=content;
+                this.from=from;
+                this.to=to;
+            }
         }
     }
 }

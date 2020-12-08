@@ -1,7 +1,11 @@
 package com.example.temporalis;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +31,8 @@ import java.util.Date;
 public class Demanda extends AppCompatActivity {
     Servizo demanda;
     public BBDD baseDatos;
+    ArrayList<Integer> idsClientes;
+    final int CODIGO = 1;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,12 +41,20 @@ public class Demanda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oferta);
         String intentAnterior = getIntent().getExtras().get("uniqueId").toString();
-        if(intentAnterior.equals("intentDemandas")){
+        if(intentAnterior.equals("IntentDemandas")){
             demanda = (Servizo)getIntent().getSerializableExtra("intentDeDemanda");
         }
         if(intentAnterior.equals("intentDemandasMeusServizos")){
             demanda = (Servizo)getIntent().getSerializableExtra("intentDeDemandaMS");
         }
+        if(intentAnterior.equals("intentDeOutrasDemandas")){
+            demanda = (Servizo)getIntent().getSerializableExtra("intentOutrasDemandas");
+        }
+        String sIdCeador = Login.getInstance().eTextUser.getText().toString();
+        int idUsuarioLogeado = baseDatos.getUserId(sIdCeador);
+        int idUsuario = demanda.getUsuarioCreador();
+        int idServizo = demanda.getIdServizo();
+        boolean existeEmpSer = baseDatos.checkEmpregaServizo(idUsuarioLogeado, idServizo);
         TextView textView = findViewById(R.id.txtTitulo);
         textView.setText(demanda.getTitulo());
         TextView textViewData = findViewById(R.id.txtData);
@@ -57,9 +72,27 @@ public class Demanda extends AppCompatActivity {
         String nomeCreador = baseDatos.getNomeUsuario(idCreador);
         textViewCreador.setText(nomeCreador);
         TextView textViewClientes = findViewById(R.id.txtClientes);
-        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(demanda.getIdServizo());
+       idsClientes = baseDatos.getIdUsuariosClientes(demanda.getIdServizo());
         for(int idCliente : idsClientes){
             textViewClientes.append(baseDatos.getNomeUsuario(idCliente)+",");
+        }
+        if(idUsuarioLogeado == idUsuario) {
+            textViewClientes.setTextColor(getResources().getColor(R.color.purple_500));
+            textViewClientes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogoClientes();
+                }
+            });
+        }
+        if(idUsuarioLogeado != idUsuario && existeEmpSer){
+            textViewCreador.setTextColor(getResources().getColor(R.color.purple_500));
+            textViewCreador.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogContactos(nomeCreador);
+                }
+            });
         }
         xestionarBoton();
     }
@@ -84,8 +117,8 @@ public class Demanda extends AppCompatActivity {
         }
         if(idUsuario == idCreador && isDatePass()){
             btnDemanda.setText("Pagar");
-            btnDemanda.setTextColor(R.color.black);
-            btnDemanda.setBackgroundColor(R.color.yellow);
+            btnDemanda.setTextColor(getResources().getColor(R.color.black));
+            btnDemanda.setBackgroundColor(getResources().getColor(R.color.yellow));
             btnDemanda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,6 +147,103 @@ public class Demanda extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void lanzarDialogoClientes() {
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
+        ArrayList<String> nomes = new ArrayList<>();
+        for(int idCliente : idsClientes){
+            nomes.add(baseDatos.getNomeUsuario(idCliente));
+        }
+        String [] array = new String[nomes.size()];
+        array = nomes.toArray(array);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] finalArray = array;
+        builder.setTitle("Clientes")
+                .setItems(array, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String nome = finalArray[which];
+                        lanzarDialogContactos(nome);
+                    }
+                });
+        AlertDialog alert11 = builder.create();
+        alert11.show();
+    }
+
+    public void lanzarDialogContactos(String nomeUsuario){
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
+        Intent correoIntent = new Intent(this,MandarCorreo.class);
+        Usuario usuario = baseDatos.getUsuario(nomeUsuario);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("Como quere contactar?");
+        builder1.setCancelable(true);
+        builder1.setPositiveButton(
+                "Chamar teléfono",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            int permiso = checkSelfPermission(Manifest.permission.CALL_PHONE);
+                            if (permiso == PackageManager.PERMISSION_GRANTED) {
+                                chamarTelefono(usuario.getTelefono());
+                            } else {
+                                Demanda.this.requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, CODIGO);
+                            }
+                        } else {
+                            chamarTelefono(usuario.getTelefono());
+                        }
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Enviar Mensaxe",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        onClickWhatsApp();
+                    }
+                });
+        builder1.setNeutralButton(
+                "Enviar Correo",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        correoIntent.putExtra("correoUsuario", usuario.getCorreoe());
+                        startActivity(correoIntent);
+                    }
+                });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    public void onClickWhatsApp() {
+
+        PackageManager pm = getPackageManager();
+        try {
+
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+            String text = "YOUR TEXT HERE";
+
+            PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            waIntent.setPackage("com.whatsapp");
+
+            waIntent.putExtra(Intent.EXTRA_TEXT, text);
+            startActivity(Intent.createChooser(waIntent, "Share with"));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+
+    private void chamarTelefono(int telefono) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + telefono));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        startActivity(callIntent);
     }
 
     public boolean isDatePass(){

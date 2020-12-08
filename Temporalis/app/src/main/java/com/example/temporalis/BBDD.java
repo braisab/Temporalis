@@ -211,6 +211,18 @@ public class BBDD extends SQLiteOpenHelper {
         return totalHoras;
     }
 
+    public String getCorreoUsuario(int idUsuario){
+        sqLite = getReadableDatabase();
+        String correo = "";
+        String sIdUsuario = idUsuario + "";
+        String[] param = {sIdUsuario};
+        Cursor cursor = sqLite.rawQuery("SELECT Correoe FROM USUARIO WHERE idUsuario =?",param);
+        if(cursor.moveToFirst()){
+            correo = cursor.getString(0);
+        }
+        return correo;
+    }
+
     public ArrayList<Integer> getIdUsuariosClientes(int idServizo){
         sqLite = getReadableDatabase();
         ArrayList<Integer> ids = new ArrayList<>();
@@ -404,7 +416,7 @@ public class BBDD extends SQLiteOpenHelper {
         sqLite.execSQL("UPDATE USUARIO SET TotalHoras = ? WHERE idUsuario =?",params);
     }
 
-    public ArrayList<Servizo> getMiñasOfertas(int idUsuario){
+    public ArrayList<Servizo> getMinhasOfertas(int idUsuario){
         sqLite = getReadableDatabase();
         ArrayList<Servizo> servizos = new ArrayList<>();
         String sIdUsuario = idUsuario + "";
@@ -430,7 +442,7 @@ public class BBDD extends SQLiteOpenHelper {
         return servizos;
     }
 
-    public ArrayList<Servizo> getMiñasDemandas(int idUsuario){
+    public ArrayList<Servizo> getMinhasDemandas(int idUsuario){
         sqLite = getReadableDatabase();
         ArrayList<Servizo> servizos = new ArrayList<>();
         String sIdUsuario = idUsuario + "";
@@ -472,12 +484,12 @@ public class BBDD extends SQLiteOpenHelper {
         return ids;
     }
 
-    public Servizo getServizoAceptado(int idServizo){
+    public Servizo getOfertaAceptada(int idServizo){
         sqLite = getReadableDatabase();
         String sIdServizo = idServizo + "";
-        String [] param = {sIdServizo};
+        String [] params = {sIdServizo};
         Servizo servizo = new Servizo();
-        Cursor cursor = sqLite.rawQuery("SELECT * FROM SERVIZO WHERE idServizo = ?", param);
+        Cursor cursor = sqLite.rawQuery("SELECT * FROM SERVIZO WHERE idServizo = ?", params);
         if(cursor.moveToFirst()){
             while (!cursor.isAfterLast()){
                 servizo.setIdServizo(cursor.getInt(0));

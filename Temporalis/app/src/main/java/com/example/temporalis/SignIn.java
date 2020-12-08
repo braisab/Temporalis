@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignIn extends AppCompatActivity {
     BBDD baseDatos;
@@ -69,6 +71,20 @@ public class SignIn extends AppCompatActivity {
         }else {
             telefono = Integer.parseInt(sTelefono);
         }
+        Pattern patternTelefono = Pattern.compile("(6|7)([0-9]*){8}");
+        Matcher matcherTelefono = patternTelefono.matcher(sTelefono);
+        if(!sTelefono.equals("") && matcherTelefono.find() != true){
+            eTelefono.setError("Nº de teléfono non válido");
+            return;
+        }
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher mather = pattern.matcher(correo);
+        if (!correo.equals("") && mather.find() == false) {
+            eTcorreo.setError("O formato do correo non é valido");
+            return;
+        }
         EditText eTperfil = findViewById(R.id.eTextPerfil);
         String perfil = eTperfil.getText().toString();
         Spinner spinner = findViewById(R.id.spinnerLocalizacion);
@@ -87,6 +103,7 @@ public class SignIn extends AppCompatActivity {
             Toast.makeText(this, "O usuario xa existe", Toast.LENGTH_LONG).show();
             return;
         }
+
 
         baseDatos.gardarUsuario(usuario);
         Toast.makeText(SignIn.this, "Usuario rexistrado", Toast.LENGTH_LONG).show();
