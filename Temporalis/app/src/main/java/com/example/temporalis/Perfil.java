@@ -96,7 +96,7 @@ public class Perfil extends AppCompatActivity {
                 String telefono = editTextTelefono.getText().toString();
                 String zona = editTextZona.getText().toString();
                 String perfil = editTextPerfil.getText().toString();
-                baseDatos.gardarPerfil(sIdUsuario,nome,correo,telefono,zona,perfil);
+                baseDatos.modificarPerfil(sIdUsuario,nome,correo,telefono,zona,perfil);
                 Toast.makeText(Perfil.this, "Perfil gardado", Toast.LENGTH_SHORT).show();
                 startActivity(recargar);
             }

@@ -151,15 +151,19 @@ public class Oferta extends AppCompatActivity {
                     "Chamar teléfono",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            if (Build.VERSION.SDK_INT >= 23) {
-                                int permiso = checkSelfPermission(Manifest.permission.CALL_PHONE);
-                                if (permiso == PackageManager.PERMISSION_GRANTED) {
-                                    chamarTelefono(usuario.getTelefono());
+                            if(usuario.getTelefono() != 0) {
+                                if (Build.VERSION.SDK_INT >= 23) {
+                                    int permiso = checkSelfPermission(Manifest.permission.CALL_PHONE);
+                                    if (permiso == PackageManager.PERMISSION_GRANTED) {
+                                        chamarTelefono(usuario.getTelefono());
+                                    } else {
+                                        Oferta.this.requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, CODIGO);
+                                    }
                                 } else {
-                                    Oferta.this.requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, CODIGO);
+                                    chamarTelefono(usuario.getTelefono());
                                 }
-                            } else {
-                                chamarTelefono(usuario.getTelefono());
+                            }else{
+                                Toast.makeText(Oferta.this, "Este usuario non rexistrou o seu teléfono. Para contactar debe enviarlle un correo", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -168,15 +172,19 @@ public class Oferta extends AppCompatActivity {
                     "Enviar Mensaxe",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            onClickWhatsApp();
+                            if(usuario.getTelefono()!=0) {
+                                onClickWhatsApp();
+                            }else{
+                                Toast.makeText(Oferta.this, "Este usuario non rexistrou o seu teléfono. Para contactar debe enviarlle un correo", Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
             builder1.setNeutralButton(
                     "Enviar Correo",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            correoIntent.putExtra("correoUsuario", usuario.getCorreoe());
-                            startActivity(correoIntent);
+                                correoIntent.putExtra("correoUsuario", usuario.getCorreoe());
+                                startActivity(correoIntent);
                         }
                     });
             AlertDialog alert11 = builder1.create();
@@ -184,7 +192,6 @@ public class Oferta extends AppCompatActivity {
         }
 
     public void onClickWhatsApp() {
-
         PackageManager pm = getPackageManager();
         try {
 
@@ -258,6 +265,10 @@ public class Oferta extends AppCompatActivity {
             btnOferta.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(!checkSaldoUser(idUsuarioLogeado)){
+                        Toast.makeText(Oferta.this, "Non conta con saldo suficiente para aceptar esta oferta", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     lanzarDialogAceptar();
                 }
             });
@@ -306,6 +317,17 @@ public class Oferta extends AppCompatActivity {
         }catch (ParseException e){
             Log.e("Erro", "Erro no parsing da data");
         }return isDatePass;
+    }
+
+    public boolean checkSaldoUser(int idUsuario){
+        boolean isPossible = true;
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
+        int expected = baseDatos.getSaldoHoras(idUsuario) - oferta.getTempoServizo();
+        if (expected < 0){
+            isPossible = false;
+        }
+        return isPossible;
     }
 
     public void lanzarDialogBorrar(){

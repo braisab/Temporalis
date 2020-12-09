@@ -30,5 +30,6 @@
         <activity android:name=".ServizosAceptados" />
         <activity android:name=".Perfil" />
         <activity android:name=".MandarCorreo" />
+        <activity android:name=".ResetPasswd" />
     </application>
 </manifest>

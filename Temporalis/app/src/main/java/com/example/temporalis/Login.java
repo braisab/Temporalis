@@ -33,6 +33,7 @@ public class Login extends AppCompatActivity {
         }
         appEntry();
         userSignIn();
+        entrySendPass();
     }
 
     public void appEntry(){
@@ -75,6 +76,17 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(signIntent);
+            }
+        });
+    }
+
+    public void entrySendPass(){
+        final Intent intentSendPass = new Intent(this, ResetPasswd.class);
+        TextView txtForgetPass = findViewById(R.id.txtForgetpassword);
+        txtForgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intentSendPass);
             }
         });
     }

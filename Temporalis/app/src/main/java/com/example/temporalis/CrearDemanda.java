@@ -54,7 +54,7 @@ public class CrearDemanda extends AppCompatActivity {
                 boolean visible = true;
                 EditText eTextDuracion = findViewById(R.id.eTextDemTempo);
                 String sDuracion = eTextDuracion.getText().toString();
-                if(titulo.equals("")||descricion.equals("")||data.equals("")||hora.equals("")||lugar.equals("")||sMaxPersoas.equals("")||sDuracion.equals("")){
+                if(titulo.equals("")||descricion.equals("")||data.equals("")||hora.equals("")||lugar.equals("")||sDuracion.equals("")){
                     Toast.makeText(CrearDemanda.this, "Todos os campos son obrigatorios", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -70,12 +70,28 @@ public class CrearDemanda extends AppCompatActivity {
                 }else {
                     maxPersoas = Integer.parseInt(sMaxPersoas);
                 }
+
+                if(!checkSaldoUser(idCreador,tempo)){
+                    Toast.makeText(CrearDemanda.this, "Non conta con saldo suficiente para crear a oferta", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 demanda = new Servizo(idServizo, titulo,descricion,maxPersoas,data,hora,lugar,idCreador,tipo,visible,tempo);
                 baseDatos.gardarServizo(demanda);
                 Toast.makeText(CrearDemanda.this, "Demanda creada", Toast.LENGTH_SHORT).show();
                 startActivity(volverIntent);
             }
         });
+    }
+
+    public boolean checkSaldoUser(int idUsuario, int duracion){
+        boolean isPossible = true;
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
+        int expected = baseDatos.getSaldoHoras(idUsuario) - duracion;
+        if (expected < 0){
+            isPossible = false;
+        }
+        return isPossible;
     }
 
     public boolean checkDate(String data, String hora){

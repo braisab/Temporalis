@@ -97,6 +97,8 @@ public class Ofertas extends AppCompatActivity {
             int countUsers = baseDatos.getCountUsersServizo(oferta.getIdServizo());
             if(countUsers >= oferta.getNumUsuarios()){
                 baseDatos.setServizoInvisible(oferta.getIdServizo());
+            }else{
+                baseDatos.setServizoVisible(oferta.getIdServizo());
             }
         }
     }

@@ -68,6 +68,18 @@
         android:textColor="@color/red" />
 
     <TextView
+        android:id="@+id/txtForgetpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_entry"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="90dp"
+        android:text="Esquecín o contrasinal"
+        android:textColor="@color/purple_500"
+        android:textIsSelectable="true"
+        android:textSize="18dp" />
+
+    <TextView
         android:id="@+id/txtView_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

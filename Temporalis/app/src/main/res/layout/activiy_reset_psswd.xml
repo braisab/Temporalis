@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/login"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correo-e:    "
+            android:textColor="@color/white"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eTextResetPass"
+            android:background="@drawable/boton_redondo"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:text="Introduce o teu correo-e e enviaremos unha mensaxe co nome de usuario e contrasinal"
+        android:textColor="@color/white"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/btnResetPass"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

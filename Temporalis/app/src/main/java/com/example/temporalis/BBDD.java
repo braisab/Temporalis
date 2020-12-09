@@ -109,6 +109,28 @@ public class BBDD extends SQLiteOpenHelper {
         return contrasinal;
     }
 
+    public String getNomeUsuarioFromMail(String correo){
+        sqLite = getReadableDatabase();
+        String [] param = {correo};
+        String nome ="";
+        Cursor cursor = sqLite.rawQuery("SELECT NomeUsuario FROM USUARIO WHERE Correoe =?",param);
+        if(cursor.moveToFirst()) {
+            nome = cursor.getString(0);
+        }
+        return nome;
+    }
+
+    public String getContrasinalFromMail(String correo){
+        sqLite = getReadableDatabase();
+        String [] param = {correo};
+        String nome ="";
+        Cursor cursor = sqLite.rawQuery("SELECT Contrasinal FROM USUARIO WHERE Correoe =?",param);
+        if(cursor.moveToFirst()) {
+            nome = cursor.getString(0);
+        }
+        return nome;
+    }
+
     public String checkNomeUsuario(String nomeUsuario){
         sqLite = getReadableDatabase();
         String [] sPass = {nomeUsuario};
@@ -193,7 +215,7 @@ public class BBDD extends SQLiteOpenHelper {
         return usuario;
     }
 
-    public void gardarPerfil(String idUsuario, String nome, String correo, String telefono, String zona, String perfil){
+    public void modificarPerfil(String idUsuario, String nome, String correo, String telefono, String zona, String perfil){
         sqLite = getWritableDatabase();
         String [] params = {nome,correo,telefono,zona,perfil, idUsuario};
         sqLite.execSQL("UPDATE USUARIO SET NomeUsuario = ?, Correoe = ?, Telefono = ?, Localizacion = ?, Perfil = ? WHERE IdUSUARIO = ?",params);
@@ -378,6 +400,13 @@ public class BBDD extends SQLiteOpenHelper {
         String sIdServizo = idServizo + "";
         String [] param =  {sIdServizo};
         sqLite.execSQL("UPDATE SERVIZO SET visible = 'false' WHERE idServizo =?",param);
+    }
+
+    public void setServizoVisible(int idServizo){
+        sqLite = getWritableDatabase();
+        String sIdServizo = idServizo + "";
+        String [] param =  {sIdServizo};
+        sqLite.execSQL("UPDATE SERVIZO SET visible = 'true' WHERE idServizo =?",param);
     }
 
     public void borrarServizo(int idServizo){

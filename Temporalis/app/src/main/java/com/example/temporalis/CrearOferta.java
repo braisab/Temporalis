@@ -55,7 +55,7 @@ public class CrearOferta extends AppCompatActivity {
                 boolean visible = true;
                 EditText eTextDuracion = findViewById(R.id.eTextTempo);
                 String sDuracion = eTextDuracion.getText().toString();
-                if(titulo.equals("")||descricion.equals("")||data.equals("")||hora.equals("")||lugar.equals("")||sMaxPersoas.equals("")||sDuracion.equals("")){
+                if(titulo.equals("")||descricion.equals("")||data.equals("")||hora.equals("")||lugar.equals("")||sDuracion.equals("")){
                     Toast.makeText(CrearOferta.this, "Todos os campos son obrigatorios", Toast.LENGTH_SHORT).show();
                     return;
                 }
