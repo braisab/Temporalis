@@ -40,6 +40,7 @@ public class BBDD extends SQLiteOpenHelper {
     private String crearEmpregaServizo = "CREATE TABLE EMPREGASERVIZO("+
             "idServizo integer,"+
             "idUsuarioCliente integer,"+
+            "Pagado boolean,"+
             "PRIMARY KEY(idServizo, idUsuarioCliente),"+
             "FOREIGN KEY(idServizo) references SERVIZO (idServizo),"+
             "FOREIGN KEY(idUsuarioCliente) references USUARIO(idUsuario))";
@@ -271,7 +272,6 @@ public class BBDD extends SQLiteOpenHelper {
         return maxId;
     }
 
-
     public void gardarServizo(Servizo servizo){
         sqLite = getWritableDatabase();
         int idServizo = servizo.getIdServizo();
@@ -283,16 +283,17 @@ public class BBDD extends SQLiteOpenHelper {
         int maxUsers = servizo.getNumUsuarios();
         int idCreador = servizo.getUsuarioCreador();
         boolean tipo = servizo.isTipo();
-        boolean viible = servizo.isVisible();
+        boolean visible = servizo.isVisible();
         int tempo = servizo.getTempoServizo();
-        sqLite.execSQL("INSERT INTO SERVIZO(idServizo,Titulo,Descricion,MaxUsuarios,Data,Hora,Lugar,UsuarioCreador,tipo,visible,Tempo)VALUES('"+idServizo+"','"+titulo+"','"+descricion+"','"+maxUsers+"','"+data+"','"+hora+"','"+lugar+"','"+idCreador+"','"+tipo+"','"+viible+"','"+tempo+"')");
+        sqLite.execSQL("INSERT INTO SERVIZO(idServizo,Titulo,Descricion,MaxUsuarios,Data,Hora,Lugar,UsuarioCreador,tipo,visible,Tempo)VALUES('"+idServizo+"','"+titulo+"','"+descricion+"','"+maxUsers+"','"+data+"','"+hora+"','"+lugar+"','"+idCreador+"','"+tipo+"','"+visible+"','"+tempo+"')");
     }
 
     public void gardarEmpregaServizo(EmpregaServizo empregaServizo){
         sqLite = getWritableDatabase();
         int idServizo = empregaServizo.getIdServizo();
         int idUsuario = empregaServizo.getIdUsuario();
-        sqLite.execSQL("INSERT INTO EMPREGASERVIZO(idServizo,idUsuarioCliente)VALUES('"+idServizo+"','"+idUsuario+"')");
+        boolean pagado = empregaServizo.isPagado();
+        sqLite.execSQL("INSERT INTO EMPREGASERVIZO(idServizo,idUsuarioCliente,Pagado)VALUES('"+idServizo+"','"+idUsuario+"','"+pagado+"')");
     }
 
     public ArrayList<Servizo> getOfertasVisibles(){
@@ -375,6 +376,53 @@ public class BBDD extends SQLiteOpenHelper {
         ArrayList<Servizo> demandas = new ArrayList<>();
         String [] params = {"false"};
         Cursor cursor = sqLite.rawQuery("SELECT * FROM SERVIZO WHERE tipo = ?",params);
+        cursor.moveToNext();
+        while (!cursor.isAfterLast()){
+            Servizo servizo = new Servizo();
+            servizo.setIdServizo(cursor.getInt(0));
+            servizo.setTitulo(cursor.getString(1));
+            servizo.setDescricion(cursor.getString(2));
+            servizo.setNumUsuarios(cursor.getInt(3));
+            servizo.setData(cursor.getString(4));
+            servizo.setHora(cursor.getString(5));
+            servizo.setLugar(cursor.getString(6));
+            servizo.setUsuarioCreador(cursor.getInt(7));
+            servizo.setTipo(false);
+            Boolean.parseBoolean(cursor.getString(9));
+            servizo.setTempoServizo(cursor.getInt(10));
+            demandas.add(servizo);
+            cursor.moveToNext();
+        }
+        return demandas;
+    }
+
+    public Servizo getOferta(int idServizo){
+        sqLite = getReadableDatabase();
+        String sId = idServizo +"";
+        String [] params = {sId};
+        Cursor cursor = sqLite.rawQuery("SELECT * FROM SERVIZO WHERE idServizo = ?",params);
+        cursor.moveToNext();
+        Servizo servizo = new Servizo();
+        servizo.setIdServizo(cursor.getInt(0));
+        servizo.setTitulo(cursor.getString(1));
+        servizo.setDescricion(cursor.getString(2));
+        servizo.setNumUsuarios(cursor.getInt(3));
+        servizo.setData(cursor.getString(4));
+        servizo.setHora(cursor.getString(5));
+        servizo.setLugar(cursor.getString(6));
+        servizo.setUsuarioCreador(cursor.getInt(7));
+        servizo.setTipo(true);
+        Boolean.parseBoolean(cursor.getString(9));
+        servizo.setTempoServizo(cursor.getInt(10));
+        return servizo;
+    }
+
+    public ArrayList<Servizo> getDemandasCreadas(int idUsuario){
+        sqLite = getReadableDatabase();
+        ArrayList<Servizo> demandas = new ArrayList<>();
+        String sIdUsuario = idUsuario + "";
+        String [] params = {sIdUsuario, "false"};
+        Cursor cursor = sqLite.rawQuery("SELECT * FROM SERVIZO WHERE UsuarioCreador = ? AND tipo = ?",params);
         cursor.moveToNext();
         while (!cursor.isAfterLast()){
             Servizo servizo = new Servizo();
@@ -495,6 +543,14 @@ public class BBDD extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
         return servizos;
+    }
+
+    public void setIsPagado(int idServizo, int idCliente){
+        sqLite = getWritableDatabase();
+        String sIdServizo = idServizo + "";
+        String sIdCliente =idCliente+"";
+        String [] params =  {sIdServizo, sIdCliente};
+        sqLite.execSQL("UPDATE EMPREGASERVIZO SET Pagado = 'true' WHERE idServizo =? AND idUsuarioCliente = ?",params);
     }
 
     public ArrayList<Integer> getIdServizosEmpSer(int idUsuario){

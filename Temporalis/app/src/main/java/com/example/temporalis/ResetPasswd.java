@@ -33,8 +33,8 @@ public class ResetPasswd extends AppCompatActivity {
                 String nomeUsuario = baseDatos.getNomeUsuarioFromMail(correo);
                 String pass = baseDatos.getContrasinalFromMail(correo);
                 if(!nomeUsuario.equals("")||!pass.equals("")) {
-                    new Oferta.MailJob(user, passwd).execute(
-                            new Oferta.MailJob.Mail("braisterbutalino@gmail.com", correo, "Temporalis: Usuario e contrasinal", "\nNome de Usuario: " + nomeUsuario + "\nContrasinal: " + pass)
+                    new MandarCorreo.MailJob(user, passwd).execute(
+                            new MandarCorreo.MailJob.Mail(user, correo, "Temporalis: Usuario e contrasinal", "\nNome de Usuario: " + nomeUsuario + "\nContrasinal: " + pass)
                     );
                 }else{
                     Toast.makeText(ResetPasswd.this, "O correo-e non existe", Toast.LENGTH_SHORT).show();

@@ -52,6 +52,7 @@ public class Oferta extends AppCompatActivity {
     public static Oferta getInstance() {
         return myContext;
     }
+    String intentAnterior;
     ArrayList<Integer> idsClientes;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -60,7 +61,7 @@ public class Oferta extends AppCompatActivity {
         baseDatos.getReadableDatabase();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oferta);
-        String intentAnterior = getIntent().getExtras().get("uniqueId").toString();
+        intentAnterior = getIntent().getExtras().get("uniqueId").toString();
         if(intentAnterior.equals("intentOfertas")){
             oferta = (Servizo)getIntent().getSerializableExtra("intentDeOferta");
         }
@@ -221,21 +222,23 @@ public class Oferta extends AppCompatActivity {
         startActivity(callIntent);
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-//        switch (requestCode) {
-//            case CODIGO: {
-//                if (grantResults.length > 0
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    chamarTelefono();
-//                } else {
-//                    Toast.makeText(this, "Precisas permisos para chamar",Toast.LENGTH_LONG).show();
-//                }
-//                return;
-//            }
-//        }
-//    }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case CODIGO: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
+                    Usuario usuario = baseDatos.getUsuario(nomeUsuario);
+                    int telefono = usuario.getTelefono();
+                    chamarTelefono(telefono);
+                } else {
+                    Toast.makeText(this, "Precisas permisos para chamar",Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void xestionarBoton(){
@@ -323,7 +326,21 @@ public class Oferta extends AppCompatActivity {
         boolean isPossible = true;
         baseDatos = new BBDD(this);
         baseDatos.getReadableDatabase();
-        int expected = baseDatos.getSaldoHoras(idUsuario) - oferta.getTempoServizo();
+        int horasTotalesOfertasAceptadas = 0;
+        int horasTotalesDemandasCreadas = 0;
+        ArrayList<Integer> idServizosAceptados = baseDatos.getIdServizosEmpSer(idUsuario);
+        for (int idServizo : idServizosAceptados){
+            Servizo oferta = baseDatos.getOferta(idServizo);
+            if(oferta.isTipo()) {
+                horasTotalesOfertasAceptadas = oferta.getTempoServizo() + horasTotalesOfertasAceptadas;
+            }
+        }
+        ArrayList<Servizo> demandasCreadas = baseDatos.getDemandasCreadas(idUsuario);
+        for(Servizo demanda : demandasCreadas){
+            horasTotalesDemandasCreadas = demanda.getTempoServizo() + horasTotalesDemandasCreadas;
+        }
+        int sumaDeHoras = horasTotalesOfertasAceptadas + horasTotalesDemandasCreadas;
+        int expected = baseDatos.getSaldoHoras(idUsuario) - (oferta.getTempoServizo() + sumaDeHoras);
         if (expected < 0){
             isPossible = false;
         }
@@ -352,8 +369,8 @@ public class Oferta extends AppCompatActivity {
                         if (idsClientes.size() > 0) {
                             for (int idCliente : idsClientes) {
                                 String correoUsuario = baseDatos.getCorreoUsuario(idCliente);
-                                new MailJob(user, passwd).execute(
-                                        new MailJob.Mail("braisterbutalino@gmail.com", correoUsuario, "Temporalis: Oferta Borrada", "O usuario " + nomeCreador + " borrou a oferta " + oferta.getTitulo() + " con data " + oferta.getData() + " " + oferta.getHora())
+                                new MandarCorreo.MailJob(user, passwd).execute(
+                                        new MandarCorreo.MailJob.Mail("braisterbutalino@gmail.com", correoUsuario, "Temporalis: Oferta Borrada", "O usuario " + nomeCreador + " borrou a oferta " + oferta.getTitulo() + " con data " + oferta.getData() + " " + oferta.getHora())
                                 );
                             }
                         }
@@ -381,12 +398,19 @@ public class Oferta extends AppCompatActivity {
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String user = "braisterbutalino@gmail.com";
+                        String passwd = "Arnelinha2013";
                         int idServizo = oferta.getIdServizo();
                         String sIdUsuario= Login.getInstance().eTextUser.getText().toString();
                         int idUsuario = baseDatos.getUserId(sIdUsuario);
-                        EmpregaServizo empregaServizo = new EmpregaServizo(idServizo,idUsuario);
+                        EmpregaServizo empregaServizo = new EmpregaServizo(idServizo,idUsuario, false);
                         baseDatos.gardarEmpregaServizo(empregaServizo);
                         startActivity(intentOfertas);
+                        int idUsuarioCreador = oferta.getUsuarioCreador();
+                        String correoUsuario = baseDatos.getCorreoUsuario(idUsuarioCreador);
+                        new MandarCorreo.MailJob(user, passwd).execute(
+                                new MandarCorreo.MailJob.Mail(user, correoUsuario, "Temporalis: Usuario interesado en oferta", "O usuario " + sIdUsuario + " interesalle a oferta:\n " + oferta.getTitulo() + " con data " + oferta.getData() + " " + oferta.getHora())
+                        );
                     }
                 });
 
@@ -402,6 +426,8 @@ public class Oferta extends AppCompatActivity {
         alert11.show();
     }
     public void lanzarDialogCancelar(){
+        String user = "braisterbutalino@gmail.com";
+        String passwd = "Arnelinha2013";
         Intent intentOfertas = new Intent(this,Ofertas.class);
         AlertDialog.Builder builder1 = new AlertDialog.Builder(Oferta.getInstance());
         builder1.setMessage("Quere cancelar esta oferta?");
@@ -415,6 +441,11 @@ public class Oferta extends AppCompatActivity {
                         int idUsuario = baseDatos.getUserId(sIdUsuario);
                         baseDatos.cancelarEmpregaServizo(idServizo,idUsuario);
                         startActivity(intentOfertas);
+                        int idUsuarioCreador = oferta.getUsuarioCreador();
+                        String correoUsuario = baseDatos.getCorreoUsuario(idUsuarioCreador);
+                        new MandarCorreo.MailJob(user, passwd).execute(
+                                new MandarCorreo.MailJob.Mail(user, correoUsuario, "Temporalis: Usuario cancelou oferta", "O usuario " + sIdUsuario + " cancelou a oferta:\n " + oferta.getTitulo() + " con data " + oferta.getData() + " " + oferta.getHora())
+                        );
                     }
                 });
 
@@ -433,6 +464,8 @@ public class Oferta extends AppCompatActivity {
     public void pagar(){
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
+        Intent intentMeusServizos = new Intent(this,MeusServizos.class);
+        Intent outrosServizos = new Intent(this,ServizosAceptados.class);
         String sIdUsuarioCliente = Login.getInstance().eTextUser.getText().toString();
         int idUsuarioCreador = oferta.getUsuarioCreador();
         int cantidadePago = oferta.getTempoServizo();
@@ -443,7 +476,14 @@ public class Oferta extends AppCompatActivity {
         int saldoUsuarioCliente = baseDatos.getSaldoHoras(idUsuarioCliente);
         int totalRestaHorasCliente = saldoUsuarioCliente - cantidadePago;
         baseDatos.updateHoras(idUsuarioCliente, totalRestaHorasCliente);
+        baseDatos.setIsPagado(oferta.getIdServizo(), idUsuarioCliente);
         Toast.makeText(this, "Transacción realizada", Toast.LENGTH_SHORT).show();
+        if(intentAnterior.equals("intentMeusServizos")){
+            startActivity(intentMeusServizos);
+        }
+        if(intentAnterior.equals("intentDeOutrasOfertas")){
+            startActivity(outrosServizos);
+        }
     }
 
     @Override
@@ -477,65 +517,6 @@ public class Oferta extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public static class MailJob extends AsyncTask<MailJob.Mail,Void,Void> {
-        private  String user;
-        private  String pass;
-
-        public MailJob(String user, String pass) {
-            super();
-            this.user = user;
-            this.pass = pass;
-        }
-
-        @Override
-        protected Void doInBackground(Mail... mails) {
-            Properties props = new Properties();
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.port", "587");
-
-            Session session = Session.getInstance(props,
-                    new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(user, pass);
-                        }
-                    });
-            for (Mail mail:mails) {
-
-                try {
-
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(mail.from));
-                    message.setRecipients(Message.RecipientType.TO,
-                            InternetAddress.parse(mail.to));
-                    message.setSubject(mail.subject);
-                    message.setText(mail.content);
-
-                    Transport.send(message);
-
-                } catch (MessagingException e) {
-                    Log.d("MailJob", e.getMessage());
-                }
-            }
-            return null;
-        }
-
-        public static class Mail{
-            private final String subject;
-            private final String content;
-            private final String from;
-            private final String to;
-
-            public Mail(String from, String to, String subject, String content){
-                this.subject=subject;
-                this.content=content;
-                this.from=from;
-                this.to=to;
-            }
         }
     }
 }

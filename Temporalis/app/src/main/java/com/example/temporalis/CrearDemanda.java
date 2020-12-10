@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -83,11 +84,26 @@ public class CrearDemanda extends AppCompatActivity {
         });
     }
 
+
     public boolean checkSaldoUser(int idUsuario, int duracion){
         boolean isPossible = true;
         baseDatos = new BBDD(this);
         baseDatos.getReadableDatabase();
-        int expected = baseDatos.getSaldoHoras(idUsuario) - duracion;
+        int horasTotalesOfertasAceptadas = 0;
+        int horasTotalesDemandasCreadas = 0;
+        ArrayList<Integer> idServizosAceptados = baseDatos.getIdServizosEmpSer(idUsuario);
+        for (int idServizo : idServizosAceptados){
+            Servizo oferta = baseDatos.getOferta(idServizo);
+            if(oferta.isTipo()) {
+                horasTotalesOfertasAceptadas = oferta.getTempoServizo() + horasTotalesOfertasAceptadas;
+            }
+        }
+        ArrayList<Servizo> demandasCreadas = baseDatos.getDemandasCreadas(idUsuario);
+        for(Servizo demanda : demandasCreadas){
+            horasTotalesDemandasCreadas = demanda.getTempoServizo() + horasTotalesDemandasCreadas;
+        }
+        int sumaDeHoras = horasTotalesOfertasAceptadas + horasTotalesDemandasCreadas;
+        int expected = baseDatos.getSaldoHoras(idUsuario) - (duracion + sumaDeHoras);
         if (expected < 0){
             isPossible = false;
         }

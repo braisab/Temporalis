@@ -37,8 +37,8 @@ public class Demandas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demandas);
         checkMaxUsers();
-        checkDate();
         checkSaldoCreadorAboutNUsers();
+        checkDate();
         cargarListView();
         crearDemandas();
     }

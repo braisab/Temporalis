@@ -3,13 +3,15 @@ package com.example.temporalis;
 public class EmpregaServizo {
     private int idServizo;
     private int idUsuario;
+    private boolean pagado;
 
     public EmpregaServizo(){
     }
 
-    public EmpregaServizo(int idServizo, int idUsuario) {
+    public EmpregaServizo(int idServizo, int idUsuario, boolean pagado) {
         this.idServizo = idServizo;
         this.idUsuario = idUsuario;
+        this.pagado = pagado;
     }
 
     public int getIdServizo() {
@@ -26,5 +28,13 @@ public class EmpregaServizo {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public boolean isPagado() {
+        return pagado;
+    }
+
+    public void setPagado(boolean pagado) {
+        this.pagado = pagado;
     }
 }

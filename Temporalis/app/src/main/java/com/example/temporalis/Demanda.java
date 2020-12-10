@@ -33,6 +33,7 @@ public class Demanda extends AppCompatActivity {
     public BBDD baseDatos;
     ArrayList<Integer> idsClientes;
     final int CODIGO = 1;
+    String intentAnterior;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class Demanda extends AppCompatActivity {
         baseDatos.getReadableDatabase();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oferta);
-        String intentAnterior = getIntent().getExtras().get("uniqueId").toString();
+        intentAnterior = getIntent().getExtras().get("uniqueId").toString();
         if(intentAnterior.equals("IntentDemandas")){
             demanda = (Servizo)getIntent().getSerializableExtra("intentDeDemanda");
         }
@@ -216,10 +217,8 @@ public class Demanda extends AppCompatActivity {
     }
 
     public void onClickWhatsApp() {
-
         PackageManager pm = getPackageManager();
         try {
-
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
             String text = "YOUR TEXT HERE";
@@ -244,6 +243,24 @@ public class Demanda extends AppCompatActivity {
             return;
         }
         startActivity(callIntent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case CODIGO: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
+                    Usuario usuario = baseDatos.getUsuario(nomeUsuario);
+                    int telefono = usuario.getTelefono();
+                    chamarTelefono(telefono);
+                } else {
+                    Toast.makeText(this, "Precisas permisos para chamar",Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 
     public boolean isDatePass(){
@@ -278,10 +295,22 @@ public class Demanda extends AppCompatActivity {
         builder1.setPositiveButton(
                 "Si",
                 new DialogInterface.OnClickListener() {
+                    String user = "braisterbutalino@gmail.com";
+                    String passwd = "Arnelinha2013";
                     public void onClick(DialogInterface dialog, int id) {
                         baseDatos.borrarServizo(demanda.getIdServizo());
                         Toast.makeText(Demanda.this, "Demanda borrada", Toast.LENGTH_SHORT).show();
                         startActivity(intentOfertas);
+                        String nomeCreador = baseDatos.getNomeUsuario(demanda.getUsuarioCreador());
+                        ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(demanda.getIdServizo());
+                        if (idsClientes.size() > 0) {
+                            for (int idCliente : idsClientes) {
+                                String correoUsuario = baseDatos.getCorreoUsuario(idCliente);
+                                new MandarCorreo.MailJob(user, passwd).execute(
+                                        new MandarCorreo.MailJob.Mail("braisterbutalino@gmail.com", correoUsuario, "Temporalis: Demanda Borrada", "O usuario " + nomeCreador + " borrou a demanda " + demanda.getTitulo() + " con data " + demanda.getData() + " " + demanda.getHora())
+                                );
+                            }
+                        }
                     }
                 });
 
@@ -306,12 +335,19 @@ public class Demanda extends AppCompatActivity {
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String user = "braisterbutalino@gmail.com";
+                        String passwd = "Arnelinha2013";
                         int idServizo = demanda.getIdServizo();
                         String sIdUsuario= Login.getInstance().eTextUser.getText().toString();
                         int idUsuario = baseDatos.getUserId(sIdUsuario);
-                        EmpregaServizo empregaServizo = new EmpregaServizo(idServizo,idUsuario);
+                        EmpregaServizo empregaServizo = new EmpregaServizo(idServizo,idUsuario, false);
                         baseDatos.gardarEmpregaServizo(empregaServizo);
                         startActivity(intentOfertas);
+                        int idUsuarioCreador = demanda.getUsuarioCreador();
+                        String correoUsuario = baseDatos.getCorreoUsuario(idUsuarioCreador);
+                        new MandarCorreo.MailJob(user, passwd).execute(
+                                new MandarCorreo.MailJob.Mail(user, correoUsuario, "Temporalis: Usuario interesado en demanda", "O usuario " + sIdUsuario + " interesalle a demanda:\n " + demanda.getTitulo() + " con data " + demanda.getData() + " " + demanda.getHora())
+                        );
                     }
                 });
 
@@ -335,11 +371,18 @@ public class Demanda extends AppCompatActivity {
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String user = "braisterbutalino@gmail.com";
+                        String passwd = "Arnelinha2013";
                         int idServizo = demanda.getIdServizo();
                         String sIdUsuario= Login.getInstance().eTextUser.getText().toString();
                         int idUsuario = baseDatos.getUserId(sIdUsuario);
                         baseDatos.cancelarEmpregaServizo(idServizo,idUsuario);
                         startActivity(intentOfertas);
+                        int idUsuarioCreador = demanda.getUsuarioCreador();
+                        String correoUsuario = baseDatos.getCorreoUsuario(idUsuarioCreador);
+                        new MandarCorreo.MailJob(user, passwd).execute(
+                                new MandarCorreo.MailJob.Mail(user, correoUsuario, "Temporalis: Usuario cancelou demanda", "O usuario " + sIdUsuario + " cancelou a demanda:\n " + demanda.getTitulo() + " con data " + demanda.getData() + " " + demanda.getHora())
+                        );
                     }
                 });
 
@@ -358,6 +401,8 @@ public class Demanda extends AppCompatActivity {
     public void pagar(){
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
+        Intent intentMeusServizos = new Intent(this,MeusServizos.class);
+        Intent outrosServizos = new Intent(this,ServizosAceptados.class);
         int numUsuarios = 0;
         int cantidadePago = demanda.getTempoServizo();
         ArrayList<Integer> idsClientes = baseDatos.getIdUsuariosClientes(demanda.getIdServizo());
@@ -368,12 +413,20 @@ public class Demanda extends AppCompatActivity {
                 pago = saldoCliente + cantidadePago;
                 baseDatos.updateHoras(idCliente, pago);
                 numUsuarios +=1;
+                baseDatos.setIsPagado(demanda.getIdServizo(), idCliente);
             }
         }
         int idUsuarioCreador = demanda.getUsuarioCreador();
         int saldoCreador = baseDatos.getSaldoHoras(idUsuarioCreador);
         int pago = saldoCreador - (cantidadePago * numUsuarios);;
         baseDatos.updateHoras(idUsuarioCreador, pago);
+        Toast.makeText(this, "Transacción realizada", Toast.LENGTH_SHORT).show();
+        if(intentAnterior.equals("intentDemandasMeusServizos")){
+            startActivity(intentMeusServizos);
+        }
+        if(intentAnterior.equals("intentDeOutrasDemandas")){
+            startActivity(outrosServizos);
+        }
     }
 
     @Override

@@ -67,7 +67,6 @@ public class MeusServizos extends AppCompatActivity {
         });
     }
 
-
     public void cargarListViewDemandas(){
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
