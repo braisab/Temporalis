@@ -53,6 +53,7 @@ public class Oferta extends AppCompatActivity {
         return myContext;
     }
     String intentAnterior;
+    Usuario usuario;
     ArrayList<Integer> idsClientes;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -144,7 +145,7 @@ public class Oferta extends AppCompatActivity {
             baseDatos = new BBDD(this);
             baseDatos.getReadableDatabase();
             Intent correoIntent = new Intent(this,MandarCorreo.class);
-            Usuario usuario = baseDatos.getUsuario(nomeUsuario);
+            usuario = baseDatos.getUsuario(nomeUsuario);
             AlertDialog.Builder builder1 = new AlertDialog.Builder(Oferta.getInstance());
             builder1.setMessage("Como quere contactar?");
             builder1.setCancelable(true);
@@ -228,8 +229,6 @@ public class Oferta extends AppCompatActivity {
             case CODIGO: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
-                    Usuario usuario = baseDatos.getUsuario(nomeUsuario);
                     int telefono = usuario.getTelefono();
                     chamarTelefono(telefono);
                 } else {
@@ -248,7 +247,7 @@ public class Oferta extends AppCompatActivity {
         String sIdCeador = Login.getInstance().eTextUser.getText().toString();
         int idUsuarioLogeado = baseDatos.getUserId(sIdCeador);
         int idUsuario = oferta.getUsuarioCreador();
-        if(idUsuario== idUsuarioLogeado){
+        if(idUsuario== idUsuarioLogeado /*&& !isDateArrives()*/){
             btnOferta.setText("Borrar Oferta");
             btnOferta.setBackgroundColor(getColor(R.color.red));
             btnOferta.setOnClickListener(new View.OnClickListener() {
@@ -258,7 +257,7 @@ public class Oferta extends AppCompatActivity {
                 }
             });
         }
-        if(idUsuario == idUsuarioLogeado && isDatePass()){
+        if(isDateArrives()){
             btnOferta.setVisibility(View.INVISIBLE);
         }
         int idServizo = oferta.getIdServizo();
@@ -276,7 +275,8 @@ public class Oferta extends AppCompatActivity {
                 }
             });
         }
-        if(idUsuario != idUsuarioLogeado && existeEmpSer && !isDatePass()){
+
+        if(idUsuario != idUsuarioLogeado && existeEmpSer && !isDateArrives()){
             btnOferta.setText("Cancelar");
             btnOferta.setBackgroundColor(getColor(R.color.red));
             btnOferta.setOnClickListener(new View.OnClickListener() {
@@ -290,6 +290,7 @@ public class Oferta extends AppCompatActivity {
             btnOferta.setText("Pagar");
             btnOferta.setTextColor(getColor(R.color.black));
             btnOferta.setBackgroundColor(getColor(R.color.yellow));
+            btnOferta.setVisibility(View.VISIBLE);
             btnOferta.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -297,6 +298,28 @@ public class Oferta extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public boolean isDateArrives(){
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
+        boolean isDatePass= false;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String sToday = dateFormat.format(Calendar.getInstance().getTime());
+            Date today = dateFormat.parse(sToday);
+            String data = oferta.getData();
+            String hora = oferta.getHora();
+            Date dataServizo = dateFormat.parse(data+ " "+hora);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataServizo);
+            cal.set(Calendar.HOUR, cal.get(Calendar.HOUR));
+            if (today.after(cal.getTime())) {
+                isDatePass = true;
+            }
+        }catch (ParseException e){
+            Log.e("Erro", "Erro no parsing da data");
+        }return isDatePass;
     }
 
     public boolean isDatePass(){

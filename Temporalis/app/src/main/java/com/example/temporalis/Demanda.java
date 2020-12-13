@@ -34,6 +34,7 @@ public class Demanda extends AppCompatActivity {
     ArrayList<Integer> idsClientes;
     final int CODIGO = 1;
     String intentAnterior;
+    Usuario usuario;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -176,7 +177,7 @@ public class Demanda extends AppCompatActivity {
         baseDatos = new BBDD(this);
         baseDatos.getReadableDatabase();
         Intent correoIntent = new Intent(this,MandarCorreo.class);
-        Usuario usuario = baseDatos.getUsuario(nomeUsuario);
+        usuario = baseDatos.getUsuario(nomeUsuario);
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage("Como quere contactar?");
         builder1.setCancelable(true);
@@ -251,8 +252,6 @@ public class Demanda extends AppCompatActivity {
             case CODIGO: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
-                    Usuario usuario = baseDatos.getUsuario(nomeUsuario);
                     int telefono = usuario.getTelefono();
                     chamarTelefono(telefono);
                 } else {
