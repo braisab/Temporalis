@@ -49,6 +49,8 @@ public class Demandas extends AppCompatActivity {
         btnCrearDemanda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                crearDemandaIntent.putExtra("uniqueId", "intentDemandas");
+                crearDemandaIntent.putExtra("intentDeDemanda", demanda);
                 startActivity(crearDemandaIntent);
             }
         });

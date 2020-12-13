@@ -104,10 +104,12 @@ public class Demanda extends AppCompatActivity {
         baseDatos = new BBDD(this);
         baseDatos.getWritableDatabase();
         Button btnDemanda = findViewById(R.id.btnServizo);
+        Button btnEditar = findViewById(R.id.btnEditarServizo);
         String sIdCeador = Login.getInstance().eTextUser.getText().toString();
         int idCreador = baseDatos.getUserId(sIdCeador);
         int idUsuario = demanda.getUsuarioCreador();
-        if(idUsuario== idCreador && !isDatePass()){
+        Intent crearDemandaIntent = new Intent(this,CrearDemanda.class);
+        if(idUsuario== idCreador && !isDateArrives()){
             btnDemanda.setText("Borrar Demanda");
             btnDemanda.setBackgroundColor(getColor(R.color.red));
             btnDemanda.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +118,24 @@ public class Demanda extends AppCompatActivity {
                     lanzarDialogBorrar();
                 }
             });
+            btnEditar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    crearDemandaIntent.putExtra("uniqueId", "intentDemanda");
+                    crearDemandaIntent.putExtra("demanda", demanda);
+                    startActivity(crearDemandaIntent);
+                }
+            });
         }
+
+        if(isDateArrives()){
+            btnDemanda.setVisibility(View.INVISIBLE);
+            btnEditar.setVisibility(View.INVISIBLE);
+        }
+
         if(idUsuario == idCreador && isDatePass()){
+            btnEditar.setVisibility(View.INVISIBLE);
+            btnDemanda.setVisibility(View.VISIBLE);
             btnDemanda.setText("Pagar");
             btnDemanda.setTextColor(getResources().getColor(R.color.black));
             btnDemanda.setBackgroundColor(getResources().getColor(R.color.yellow));
@@ -131,7 +149,8 @@ public class Demanda extends AppCompatActivity {
         int idServizo = demanda.getIdServizo();
         boolean existeEmpSer = baseDatos.checkEmpregaServizo(idCreador, idServizo);
         if(idUsuario != idCreador && !existeEmpSer){
-            btnDemanda.setText("Estou interesada/o");
+            btnEditar.setVisibility(View.INVISIBLE);
+            btnDemanda.setText("Interésame");
             btnDemanda.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -139,7 +158,8 @@ public class Demanda extends AppCompatActivity {
                 }
             });
         }
-        if(idUsuario != idCreador && existeEmpSer){
+        if(idUsuario != idCreador && existeEmpSer && !isDateArrives()){
+            btnEditar.setVisibility(View.INVISIBLE);
             btnDemanda.setText("Cancelar");
             btnDemanda.setBackgroundColor(getColor(R.color.red));
             btnDemanda.setOnClickListener(new View.OnClickListener() {
@@ -260,6 +280,28 @@ public class Demanda extends AppCompatActivity {
                 return;
             }
         }
+    }
+
+    public boolean isDateArrives(){
+        baseDatos = new BBDD(this);
+        baseDatos.getReadableDatabase();
+        boolean isDatePass= false;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            String sToday = dateFormat.format(Calendar.getInstance().getTime());
+            Date today = dateFormat.parse(sToday);
+            String data = demanda.getData();
+            String hora = demanda.getHora();
+            Date dataServizo = dateFormat.parse(data+ " "+hora);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataServizo);
+            cal.set(Calendar.HOUR, cal.get(Calendar.HOUR));
+            if (today.after(cal.getTime())) {
+                isDatePass = true;
+            }
+        }catch (ParseException e){
+            Log.e("Erro", "Erro no parsing da data");
+        }return isDatePass;
     }
 
     public boolean isDatePass(){

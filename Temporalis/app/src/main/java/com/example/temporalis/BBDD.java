@@ -593,4 +593,34 @@ public class BBDD extends SQLiteOpenHelper {
         }
         return servizo;
     }
+
+    public int countEmpregaServizo (int idServizo){
+        sqLite = getReadableDatabase();
+        int relacions = 0;
+        String sIdServizo = idServizo + "";
+        String [] params = {sIdServizo};
+        Cursor cursor = sqLite.rawQuery("SELECT COUNT(idServizo) FROM EMPREGASERVIZO WHERE idServizo = ?", params);
+        if(cursor.moveToFirst()){
+           relacions = cursor.getInt(0);
+        }
+        return relacions;
+    }
+
+    public int countEmpregaServizoPagados (int idServizo){
+        sqLite = getReadableDatabase();
+        int relacions = 0;
+        String sIdServizo = idServizo + "";
+        String [] params = {sIdServizo, "true"};
+        Cursor cursor = sqLite.rawQuery("SELECT COUNT(idServizo) FROM EMPREGASERVIZO WHERE idServizo = ? AND Pagado = ?", params);
+        if(cursor.moveToFirst()){
+            relacions = cursor.getInt(0);
+        }
+        return relacions;
+    }
+
+    public void updateServizo(String titulo, String descricion, String data, String hora,  String maxUsers, String lugar, String duracion, String idServizo){
+        sqLite = getWritableDatabase();
+        String [] params = {titulo, descricion, data, hora, maxUsers, lugar, duracion, idServizo};
+        sqLite.execSQL("UPDATE SERVIZO SET Titulo = ?, Descricion=?, Data=?, Hora=?, MaxUsuarios=?, Lugar = ?, Tempo = ? WHERE idServizo = ?", params);
+    }
 }

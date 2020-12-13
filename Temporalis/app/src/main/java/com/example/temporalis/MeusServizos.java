@@ -32,6 +32,8 @@ public class MeusServizos extends AppCompatActivity {
         TextView txtDemandas = findViewById(R.id.txtDemandas);
         txtDemandas.setVisibility(View.VISIBLE);
         txtOfertas.setVisibility(View.VISIBLE);
+        txtOfertas.setText("AS MIÑAS OFERTAS:");
+        txtDemandas.setText("AS MIÑAS DEMANDAS:");
         cargarListViewOfertas();
         cargarListViewDemandas();
     }
@@ -42,9 +44,18 @@ public class MeusServizos extends AppCompatActivity {
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
         final ArrayList<Servizo> servizos = baseDatos.getMinhasOfertas(idUsuario);
+        final ArrayList<Servizo> ofertasNonPagadas = new ArrayList<>();
+        for (Servizo oferta : servizos){
+            int idOferta = oferta.getIdServizo();
+            int relacion = baseDatos.countEmpregaServizo(idOferta);
+            int ofertasPagadas = baseDatos.countEmpregaServizoPagados(idOferta);
+            if(relacion != ofertasPagadas){
+                ofertasNonPagadas.add(oferta);
+            }
+        }
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listView = findViewById(R.id.listViewOfertas);
-        arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,servizos) {
+        arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,ofertasNonPagadas) {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -73,9 +84,18 @@ public class MeusServizos extends AppCompatActivity {
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
         final ArrayList<Servizo> servizos = baseDatos.getMinhasDemandas(idUsuario);
+        final ArrayList<Servizo> demandasNonPagadas = new ArrayList<>();
+        for (Servizo demanda : servizos){
+            int idDemanda = demanda.getIdServizo();
+            int relacion = baseDatos.countEmpregaServizo(idDemanda);
+            int demandasPagadas = baseDatos.countEmpregaServizoPagados(idDemanda);
+            if(relacion != demandasPagadas){
+                demandasNonPagadas.add(demanda);
+            }
+        }
         ArrayAdapter<Servizo> arrayAdapter;
         ListView listViewDemandas = findViewById(R.id.listViewDemandas);
-        arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,servizos) {
+        arrayAdapter = new ArrayAdapter<Servizo>(this, android.R.layout.simple_list_item_1,demandasNonPagadas) {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {

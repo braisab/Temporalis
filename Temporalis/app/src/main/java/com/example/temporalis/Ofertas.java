@@ -55,6 +55,8 @@ public class Ofertas extends AppCompatActivity {
         btnCrearOferta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                crearOfertaIntent.putExtra("uniqueId", "intentOfertas");
+                crearOfertaIntent.putExtra("intentDeOferta", oferta);
                 startActivity(crearOfertaIntent);
             }
         });

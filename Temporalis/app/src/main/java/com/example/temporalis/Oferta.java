@@ -118,6 +118,81 @@ public class Oferta extends AppCompatActivity {
         xestionarBoton();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void xestionarBoton(){
+        baseDatos = new BBDD(this);
+        baseDatos.getWritableDatabase();
+        Button btnOferta = findViewById(R.id.btnServizo);
+        Button btnEditar = findViewById(R.id.btnEditarServizo);
+        String sIdCeador = Login.getInstance().eTextUser.getText().toString();
+        Intent crearOfertaIntent = new Intent(this,CrearOferta.class);
+        int idUsuarioLogeado = baseDatos.getUserId(sIdCeador);
+        int idUsuario = oferta.getUsuarioCreador();
+        if(idUsuario== idUsuarioLogeado && !isDateArrives()){
+            btnOferta.setText("Borrar Oferta");
+            btnOferta.setBackgroundColor(getColor(R.color.red));
+            btnOferta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogBorrar();
+                }
+            });
+            btnEditar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    crearOfertaIntent.putExtra("uniqueId", "intentOferta");
+                    crearOfertaIntent.putExtra("oferta",oferta);
+                    startActivity(crearOfertaIntent);
+                }
+            });
+        }
+        if(isDateArrives()){
+            btnOferta.setVisibility(View.INVISIBLE);
+            btnEditar.setVisibility(View.INVISIBLE);
+        }
+        int idServizo = oferta.getIdServizo();
+        boolean existeEmpSer = baseDatos.checkEmpregaServizo(idUsuarioLogeado, idServizo);
+        if(idUsuario != idUsuarioLogeado && !existeEmpSer){
+            btnEditar.setVisibility(View.INVISIBLE);
+            btnOferta.setText("Interésame");
+            btnOferta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!checkSaldoUser(idUsuarioLogeado)){
+                        Toast.makeText(Oferta.this, "Non conta con saldo suficiente para aceptar esta oferta", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    lanzarDialogAceptar();
+                }
+            });
+        }
+
+        if(idUsuario != idUsuarioLogeado && existeEmpSer && !isDateArrives()){
+            btnEditar.setVisibility(View.INVISIBLE);
+            btnOferta.setText("Cancelar");
+            btnOferta.setBackgroundColor(getColor(R.color.red));
+            btnOferta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogCancelar();
+                }
+            });
+        }
+
+        if(idUsuario != idUsuarioLogeado && existeEmpSer && isDatePass()){
+            btnEditar.setVisibility(View.INVISIBLE);
+            btnOferta.setText("Pagar");
+            btnOferta.setTextColor(getColor(R.color.black));
+            btnOferta.setBackgroundColor(getColor(R.color.yellow));
+            btnOferta.setVisibility(View.VISIBLE);
+            btnOferta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pagar();
+                }
+            });
+        }
+    }
 
         public void lanzarDialogoClientes() {
             baseDatos = new BBDD(this);
@@ -239,66 +314,7 @@ public class Oferta extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void xestionarBoton(){
-        baseDatos = new BBDD(this);
-        baseDatos.getWritableDatabase();
-        Button btnOferta = findViewById(R.id.btnServizo);
-        String sIdCeador = Login.getInstance().eTextUser.getText().toString();
-        int idUsuarioLogeado = baseDatos.getUserId(sIdCeador);
-        int idUsuario = oferta.getUsuarioCreador();
-        if(idUsuario== idUsuarioLogeado /*&& !isDateArrives()*/){
-            btnOferta.setText("Borrar Oferta");
-            btnOferta.setBackgroundColor(getColor(R.color.red));
-            btnOferta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    lanzarDialogBorrar();
-                }
-            });
-        }
-        if(isDateArrives()){
-            btnOferta.setVisibility(View.INVISIBLE);
-        }
-        int idServizo = oferta.getIdServizo();
-        boolean existeEmpSer = baseDatos.checkEmpregaServizo(idUsuarioLogeado, idServizo);
-        if(idUsuario != idUsuarioLogeado && !existeEmpSer){
-            btnOferta.setText("Interésame");
-            btnOferta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(!checkSaldoUser(idUsuarioLogeado)){
-                        Toast.makeText(Oferta.this, "Non conta con saldo suficiente para aceptar esta oferta", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    lanzarDialogAceptar();
-                }
-            });
-        }
 
-        if(idUsuario != idUsuarioLogeado && existeEmpSer && !isDateArrives()){
-            btnOferta.setText("Cancelar");
-            btnOferta.setBackgroundColor(getColor(R.color.red));
-            btnOferta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    lanzarDialogCancelar();
-                }
-            });
-        }
-        if(idUsuario != idUsuarioLogeado && existeEmpSer && isDatePass()){
-            btnOferta.setText("Pagar");
-            btnOferta.setTextColor(getColor(R.color.black));
-            btnOferta.setBackgroundColor(getColor(R.color.yellow));
-            btnOferta.setVisibility(View.VISIBLE);
-            btnOferta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pagar();
-                }
-            });
-        }
-    }
 
     public boolean isDateArrives(){
         baseDatos = new BBDD(this);

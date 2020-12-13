@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,11 +22,19 @@ import java.util.Date;
 public class CrearDemanda extends AppCompatActivity {
     public BBDD baseDatos;
     Servizo demanda;
+    String intentAnterior;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_demandas);
-        xestionarBotons();
+        intentAnterior = getIntent().getExtras().get("uniqueId").toString();
+        if(intentAnterior.equals("intentDemanda")){
+            demanda = (Servizo)getIntent().getSerializableExtra("demanda");
+            updateDemanda();
+        }
+        if(intentAnterior.equals("intentDemandas")) {
+            xestionarBotons();
+        }
     }
 
     public void xestionarBotons(){
@@ -73,13 +82,79 @@ public class CrearDemanda extends AppCompatActivity {
                 }
 
                 if(!checkSaldoUser(idCreador,tempo)){
-                    Toast.makeText(CrearDemanda.this, "Non conta con saldo suficiente para crear a oferta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearDemanda.this, "Non conta con saldo suficiente para crear a demanda", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 demanda = new Servizo(idServizo, titulo,descricion,maxPersoas,data,hora,lugar,idCreador,tipo,visible,tempo);
                 baseDatos.gardarServizo(demanda);
                 Toast.makeText(CrearDemanda.this, "Demanda creada", Toast.LENGTH_SHORT).show();
                 startActivity(volverIntent);
+            }
+        });
+    }
+
+    public void updateDemanda(){
+        baseDatos = new BBDD(this);
+        baseDatos.getWritableDatabase();
+        Intent demandasIntent = new Intent(this,Demandas.class);
+        Button btnCrear = findViewById(R.id.btnCrearDem);
+        btnCrear.setText("Gardar");
+        EditText eTTitulo = findViewById(R.id.eTextDemTitulo);
+        eTTitulo.setText(demanda.getTitulo());
+        EditText eTDescricion = findViewById(R.id.eTextDemDescricion);
+        eTDescricion.setText(demanda.getDescricion());
+        EditText eTData = findViewById(R.id.eTextDemData);
+        eTData.setText(demanda.getData());
+        EditText eTHora = findViewById(R.id.eTextDemHora);
+        eTHora.setText(demanda.getHora());
+        EditText etextLugar = findViewById(R.id.eDemLugar);
+        EditText eTMaxUsers = findViewById(R.id.eDemMaxUsers);
+        if(demanda.getNumUsuarios() == 25000){
+            eTMaxUsers.setText("");
+        }else {
+            eTMaxUsers.setText(demanda.getNumUsuarios() + "");
+        }
+        EditText eTextDuracion = findViewById(R.id.eTextDemTempo);
+        eTextDuracion.setText(demanda.getTempoServizo()+"");
+        btnCrear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText eTTitulo = findViewById(R.id.eTextDemTitulo);
+                String titulo = eTTitulo.getText().toString();
+                EditText eTDescricion = findViewById(R.id.eTextDemDescricion);
+                String descricion = eTDescricion.getText().toString();
+                EditText eTData = findViewById(R.id.eTextDemData);
+                String data = eTData.getText().toString();
+                EditText eTHora = findViewById(R.id.eTextDemHora);
+                String hora = eTHora.getText().toString();
+                EditText etextLugar = findViewById(R.id.eDemLugar);
+                String lugar = etextLugar.getText().toString();
+                EditText eTMaxUsers = findViewById(R.id.eDemMaxUsers);
+                String sMaxPersoas = eTMaxUsers.getText().toString();
+                EditText eTextDuracion = findViewById(R.id.eTextDemTempo);
+                String sDuracion = eTextDuracion.getText().toString();
+                if(titulo.equals("")||descricion.equals("")||data.equals("")||hora.equals("")||lugar.equals("")||sDuracion.equals("")){
+                    Toast.makeText(CrearDemanda.this, "Todos os campos Excepto Max Usuarios son obrigatorios", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(checkDate(data,hora)){
+                    eTData.setError("A data ou a hora da oferta non é válida");
+                    eTHora.setError("A data ou a hora da oferta non é válida");
+                    return;
+                }
+                int tempo =Integer.parseInt(sDuracion);
+                int maxPersoas;
+                if(sMaxPersoas.equals("")) {
+                    maxPersoas = 25000;
+                }else {
+                    maxPersoas = Integer.parseInt(sMaxPersoas);
+                }
+                String duracion = tempo + "";
+                String sMaxUsers = maxPersoas+"";
+                String idServizo = demanda.getIdServizo()+"";
+                baseDatos.updateServizo(titulo,descricion,data,hora,sMaxUsers,lugar,duracion,idServizo);
+                Toast.makeText(CrearDemanda.this, "Demanda gardada", Toast.LENGTH_SHORT).show();
+                startActivity(demandasIntent);
             }
         });
     }

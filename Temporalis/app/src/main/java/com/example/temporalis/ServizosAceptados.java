@@ -27,6 +27,10 @@ public class ServizosAceptados extends AppCompatActivity {
         setContentView(R.layout.activity_ofertas);
         Button btnOfertas = findViewById(R.id.btnCrearOferta);
         btnOfertas.setVisibility(View.INVISIBLE);
+        TextView textViewOfertas = findViewById(R.id.txtOfertas);
+        TextView textViewDemandas = findViewById(R.id.txtDemandas);
+        textViewDemandas.setText("DEMANDAS ACEPTADAS:");
+        textViewOfertas.setText("OFERTAS ACEPTADAS:");
         cargarListViewOfertas();
         cargarListViewDemandas();
     }
