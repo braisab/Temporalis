@@ -25,15 +25,16 @@
             android:layout_marginStart="86dp"
             android:layout_marginLeft="86dp"
             android:layout_marginTop="0dp"
+            android:textSize="15dp"
             android:layout_toRightOf="@id/txtTitulo"
-            android:background="@drawable/boton_redondo"
-            android:hint="Título" />
+            android:background="@drawable/boton_redondo" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/llData"
+        android:paddingTop="10dp"
         android:layout_below="@id/llTitulo" >
         <TextView
             android:layout_width="wrap_content"
@@ -44,11 +45,12 @@
 
         <EditText
             android:id="@+id/eTextData"
-            android:layout_width="263dp"
+            android:layout_width="264dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="92dp"
             android:layout_marginLeft="92dp"
+            android:textSize="15dp"
             android:layout_toRightOf="@id/txtData"
             android:background="@drawable/boton_redondo"
             android:hint="Formato: dd/mm/aaaa"
@@ -58,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingTop="10dp"
         android:id="@+id/llHora"
         android:layout_below="@+id/llData">
         <TextView
@@ -69,20 +72,22 @@
 
         <EditText
             android:id="@+id/eTextHora"
-            android:layout_width="266dp"
+            android:layout_width="264dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="90.5dp"
-            android:layout_marginLeft="90.5dp"
+            android:layout_marginLeft="91dp"
             android:layout_toRightOf="@id/txtHora"
             android:background="@drawable/boton_redondo"
             android:hint="Formato: hh:mm"
+            android:textSize="15dp"
             android:inputType="datetime" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingTop="10dp"
         android:id="@+id/llLugar"
         android:layout_below="@id/llHora">
         <TextView
@@ -94,11 +99,12 @@
 
         <Spinner
             android:id="@+id/lugar"
-            android:layout_width="264dp"
+            android:layout_width="265dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="85dp"
             android:layout_toRightOf="@id/txtLugar"
+            android:textSize="15dp"
             android:background="@drawable/boton_redondo"
             android:entries="@array/parroquias" />
     </RelativeLayout>
@@ -107,6 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+            android:paddingTop="10dp"
             android:id="@+id/llDuracion"
             android:layout_below="@+id/llLugar">
         <TextView
@@ -122,7 +129,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="18dp"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="25dp"
+                android:textSize="15dp"
+                android:inputType="number"
                 android:layout_toRightOf="@id/txtDuracion"
                 android:background="@drawable/boton_redondo" />
         </RelativeLayout>
@@ -132,6 +141,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
          android:id="@+id/llMaxUsers"
+         android:paddingTop="10dp"
          android:layout_below="@+id/llDuracion">
         <TextView
             android:layout_width="wrap_content"
@@ -147,15 +157,17 @@
              android:layout_gravity="center_horizontal"
              android:layout_marginStart="5dp"
              android:layout_marginLeft="5dp"
+             android:textSize="15dp"
              android:layout_toRightOf="@id/txtLimite"
              android:background="@drawable/boton_redondo"
-             android:hint="Non cubrir: Sen límite" />
+             android:hint="Sen límite" />
      </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingTop="10dp"
         android:id="@+id/llDescricion"
         android:layout_below="@id/llMaxUsers">
         <TextView
@@ -172,6 +184,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="54dp"
             android:layout_marginLeft="54dp"
+            android:textSize="15dp"
             android:layout_toRightOf="@id/txtDescricion"
             android:background="@drawable/boton_redondo"
             android:hint="Descrición" />
@@ -182,6 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crear Oferta"
+        android:paddingTop="10dp"
         android:id="@+id/btnCrear"
         android:layout_gravity="center_horizontal"
         android:layout_below="@id/llDescricion"/>

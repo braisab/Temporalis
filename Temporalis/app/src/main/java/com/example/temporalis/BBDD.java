@@ -525,22 +525,23 @@ public class BBDD extends SQLiteOpenHelper {
         String sIdUsuario = idUsuario + "";
         String [] params = {sIdUsuario, "false"};
         Cursor cursor = sqLite.rawQuery("SELECT * FROM SERVIZO WHERE UsuarioCreador = ? AND tipo = ?",params);
-        cursor.moveToNext();
-        while (!cursor.isAfterLast()){
-            Servizo servizo = new Servizo();
-            servizo.setIdServizo(cursor.getInt(0));
-            servizo.setTitulo(cursor.getString(1));
-            servizo.setDescricion(cursor.getString(2));
-            servizo.setNumUsuarios(cursor.getInt(3));
-            servizo.setData(cursor.getString(4));
-            servizo.setHora(cursor.getString(5));
-            servizo.setLugar(cursor.getString(6));
-            servizo.setUsuarioCreador(cursor.getInt(7));
-            servizo.setTipo(Boolean.parseBoolean(cursor.getString(8)));
-            servizo.setVisible(Boolean.parseBoolean(cursor.getString(9)));
-            servizo.setTempoServizo(cursor.getInt(10));
-            servizos.add(servizo);
-            cursor.moveToNext();
+        if(cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                Servizo servizo = new Servizo();
+                servizo.setIdServizo(cursor.getInt(0));
+                servizo.setTitulo(cursor.getString(1));
+                servizo.setDescricion(cursor.getString(2));
+                servizo.setNumUsuarios(cursor.getInt(3));
+                servizo.setData(cursor.getString(4));
+                servizo.setHora(cursor.getString(5));
+                servizo.setLugar(cursor.getString(6));
+                servizo.setUsuarioCreador(cursor.getInt(7));
+                servizo.setTipo(Boolean.parseBoolean(cursor.getString(8)));
+                servizo.setVisible(Boolean.parseBoolean(cursor.getString(9)));
+                servizo.setTempoServizo(cursor.getInt(10));
+                servizos.add(servizo);
+                cursor.moveToNext();
+            }
         }
         return servizos;
     }

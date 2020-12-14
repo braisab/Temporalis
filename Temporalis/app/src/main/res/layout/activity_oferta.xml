@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:id="@+id/txtViewHora"
-            android:text="Hora:"
+            android:text="Hora: "
             android:textColor="@color/white"/>
 
         <TextView
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtViewLugar"
-            android:text="Lugar:"
+            android:text="Lugar: "
             android:textSize="18dp"
             android:textColor="@color/white"/>
 
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtViewDuracion"
-            android:text="Duración:"
+            android:text="Duración: "
             android:textSize="18dp"
             android:textColor="@color/white"/>
 
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/txtViewCreador"
             android:textSize="18dp"
-            android:text="Usuario:"
+            android:text="Usuario: "
             android:textColor="@color/white"/>
 
         <TextView
@@ -151,7 +151,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtViewClientes"
         android:textSize="18dp"
-        android:text="Aceptaron:"
+        android:text="Aceptaron: "
         android:textColor="@color/white"/>
 
     <TextView

@@ -95,7 +95,7 @@ public class Oferta extends AppCompatActivity {
         TextView textViewClientes = findViewById(R.id.txtClientes);
         idsClientes = baseDatos.getIdUsuariosClientes(oferta.getIdServizo());
         for(int idCliente : idsClientes){
-            textViewClientes.append(baseDatos.getNomeUsuario(idCliente)+",");
+            textViewClientes.append(baseDatos.getNomeUsuario(idCliente)+"  ");
         }
         if(idUsuarioLogeado == idUsuario) {
             textViewClientes.setTextColor(getResources().getColor(R.color.purple_500));
@@ -193,6 +193,7 @@ public class Oferta extends AppCompatActivity {
             });
         }
     }
+
 
         public void lanzarDialogoClientes() {
             baseDatos = new BBDD(this);
@@ -398,8 +399,8 @@ public class Oferta extends AppCompatActivity {
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String user = "braisterbutalino@gmail.com";
-                        String passwd = "Arnelinha2013";
+                        String user = "temporaliscompostela@gmail.com";
+                        String passwd = "m8ECstTEyZ2dqvF";
                         baseDatos.borrarServizo(oferta.getIdServizo());
                         Toast.makeText(Oferta.this, "Oferta borrada", Toast.LENGTH_SHORT).show();
                         startActivity(intentOfertas);
@@ -409,7 +410,7 @@ public class Oferta extends AppCompatActivity {
                             for (int idCliente : idsClientes) {
                                 String correoUsuario = baseDatos.getCorreoUsuario(idCliente);
                                 new MandarCorreo.MailJob(user, passwd).execute(
-                                        new MandarCorreo.MailJob.Mail("braisterbutalino@gmail.com", correoUsuario, "Temporalis: Oferta Borrada", "O usuario " + nomeCreador + " borrou a oferta " + oferta.getTitulo() + " con data " + oferta.getData() + " " + oferta.getHora())
+                                        new MandarCorreo.MailJob.Mail(user, correoUsuario, "Temporalis: Oferta Borrada", "O usuario " + nomeCreador + " borrou a oferta " + oferta.getTitulo() + " con data " + oferta.getData() + " " + oferta.getHora())
                                 );
                             }
                         }
@@ -437,8 +438,8 @@ public class Oferta extends AppCompatActivity {
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String user = "braisterbutalino@gmail.com";
-                        String passwd = "Arnelinha2013";
+                        String user = "temporaliscompostela@gmail.com";
+                        String passwd = "m8ECstTEyZ2dqvF";
                         int idServizo = oferta.getIdServizo();
                         String sIdUsuario= Login.getInstance().eTextUser.getText().toString();
                         int idUsuario = baseDatos.getUserId(sIdUsuario);
@@ -465,8 +466,8 @@ public class Oferta extends AppCompatActivity {
         alert11.show();
     }
     public void lanzarDialogCancelar(){
-        String user = "braisterbutalino@gmail.com";
-        String passwd = "Arnelinha2013";
+        String user = "temporaliscompostela@gmail.com";
+        String passwd = "m8ECstTEyZ2dqvF";
         Intent intentOfertas = new Intent(this,Ofertas.class);
         AlertDialog.Builder builder1 = new AlertDialog.Builder(Oferta.getInstance());
         builder1.setMessage("Quere cancelar esta oferta?");

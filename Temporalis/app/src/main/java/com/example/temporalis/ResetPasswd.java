@@ -26,8 +26,8 @@ public class ResetPasswd extends AppCompatActivity {
         btnSendContrasinal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = "braisterbutalino@gmail.com";
-                String passwd = "Arnelinha2013";
+                String user = "temporaliscompostela@gmail.com";
+                String passwd = "m8ECstTEyZ2dqvF";
                 EditText eTextCorreo = findViewById(R.id.eTextResetPass);
                 String correo = eTextCorreo.getText().toString();
                 String nomeUsuario = baseDatos.getNomeUsuarioFromMail(correo);

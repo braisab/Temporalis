@@ -336,8 +336,8 @@ public class Demanda extends AppCompatActivity {
         builder1.setPositiveButton(
                 "Si",
                 new DialogInterface.OnClickListener() {
-                    String user = "braisterbutalino@gmail.com";
-                    String passwd = "Arnelinha2013";
+                    String user = "temporaliscompostela@gmail.com";
+                    String passwd = "m8ECstTEyZ2dqvF";
                     public void onClick(DialogInterface dialog, int id) {
                         baseDatos.borrarServizo(demanda.getIdServizo());
                         Toast.makeText(Demanda.this, "Demanda borrada", Toast.LENGTH_SHORT).show();
@@ -376,8 +376,8 @@ public class Demanda extends AppCompatActivity {
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String user = "braisterbutalino@gmail.com";
-                        String passwd = "Arnelinha2013";
+                        String user = "temporaliscompostela@gmail.com";
+                        String passwd = "m8ECstTEyZ2dqvF";
                         int idServizo = demanda.getIdServizo();
                         String sIdUsuario= Login.getInstance().eTextUser.getText().toString();
                         int idUsuario = baseDatos.getUserId(sIdUsuario);
@@ -412,8 +412,8 @@ public class Demanda extends AppCompatActivity {
                 "Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String user = "braisterbutalino@gmail.com";
-                        String passwd = "Arnelinha2013";
+                        String user = "temporaliscompostela@gmail.com";
+                        String passwd = "m8ECstTEyZ2dqvF";
                         int idServizo = demanda.getIdServizo();
                         String sIdUsuario= Login.getInstance().eTextUser.getText().toString();
                         int idUsuario = baseDatos.getUserId(sIdUsuario);

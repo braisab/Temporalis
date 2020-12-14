@@ -122,10 +122,10 @@ public class Servizo implements Serializable {
 
     @Override
     public String toString() {
-        return  titulo +"\n"+
-                "Data:" + data + "\n" +
-                "Hora:" + hora + "\n" +
-                "Localizacion:" +lugar+"\n__________________";
+        return  "\t\t\t\t"+titulo +"\n"+
+                "\t\t\t\t"+"Data:  " + data + "\n" +
+                "\t\t\t\t"+"Hora:  " + hora + "\n" +
+                "\t\t\t\t"+"Localizacion:  " +lugar+"\n__________________________________";
     }
 }
 

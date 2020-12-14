@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login"
+    tools:context=".Login">
+
+    <TextView
+        android:id="@+id/txtVievNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_register"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/eText_User"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@id/txtVievNome"
+        android:background="@drawable/boton_redondo"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/txtPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtVievNome"
+        android:layout_marginTop="48dp"
+        android:text="@string/password_register"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/eText_password"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eText_User"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="51dp"
+        android:layout_toRightOf="@id/txtPass"
+        android:background="@drawable/boton_redondo"
+        android:inputType="textWebPassword"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btn_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eText_password"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="82dp"
+        android:background="@drawable/boton_redondo"
+        android:text="@string/btn_register"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/txtView_eror"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtView_register"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:id="@+id/txtForgetpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_entry"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="90dp"
+        android:text="Esquecín o contrasinal"
+        android:textColor="@color/purple_500"
+        android:textIsSelectable="true"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/txtView_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_entry"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="56dp"
+        android:text="Rexistrarse"
+        android:textColor="@color/purple_500"
+        android:textIsSelectable="true"
+        android:textSize="18dp" />
+</RelativeLayout>

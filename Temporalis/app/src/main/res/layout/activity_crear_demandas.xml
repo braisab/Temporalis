@@ -1,77 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/degrade">
+    android:background="@drawable/degrade"
+    android:padding="10dp">
 
-    <EditText
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Título"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:id="@+id/eTextDemTitulo"
-        android:layout_gravity="center_horizontal"/>
-    <EditText
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llTitulo">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Título: "
+            android:id="@+id/txtTitulo"/>
+
+        <EditText
+            android:id="@+id/eTextDemTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="86dp"
+            android:layout_marginLeft="86dp"
+            android:layout_marginTop="0dp"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/txtTitulo"
+            android:background="@drawable/boton_redondo" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descrición"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:id="@+id/eTextDemDescricion"
-        android:layout_gravity="center_horizontal"/>
-    <EditText
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llData"
+        android:paddingTop="10dp"
+        android:layout_below="@id/llTitulo" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Data: "
+            android:id="@+id/txtData"/>
+
+        <EditText
+            android:id="@+id/eTextDemData"
+            android:layout_width="264dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="92dp"
+            android:layout_marginLeft="92dp"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/txtData"
+            android:background="@drawable/boton_redondo"
+            android:hint="Formato: dd/mm/aaaa"
+            android:inputType="date" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Data"
-        android:textColor="@color/white"
-        android:inputType="date"
-        android:textColorHint="@color/white"
-        android:id="@+id/eTextDemData"
-        android:layout_gravity="center_horizontal"/>
-    <EditText
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:id="@+id/llHora"
+        android:layout_below="@+id/llData">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Hora: "
+            android:id="@+id/txtHora"/>
+
+        <EditText
+            android:id="@+id/eTextDemHora"
+            android:layout_width="264dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="90.5dp"
+            android:layout_marginLeft="91dp"
+            android:layout_toRightOf="@id/txtHora"
+            android:background="@drawable/boton_redondo"
+            android:hint="Formato: hh:mm"
+            android:textSize="15dp"
+            android:inputType="datetime" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hora"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:inputType="datetime"
-        android:id="@+id/eTextDemHora"
-        android:layout_gravity="center_horizontal"/>
-    <EditText
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:id="@+id/llLugar"
+        android:layout_below="@id/llHora">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Lugar: "
+            android:id="@+id/txtLugar"/>
+
+        <Spinner
+            android:id="@+id/eDemLugar"
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="85dp"
+            android:layout_toRightOf="@id/txtLugar"
+            android:textSize="15dp"
+            android:background="@drawable/boton_redondo"
+            android:entries="@array/parroquias" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Lugar"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:id="@+id/eDemLugar"
-        android:layout_gravity="center_horizontal"/>
-    <EditText
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:id="@+id/llDuracion"
+        android:layout_below="@+id/llLugar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Duración(Horas): "
+            android:id="@+id/txtDuracion"/>
+
+        <EditText
+            android:id="@+id/eTextDemTempo"
+            android:layout_width="264dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="25dp"
+            android:textSize="15dp"
+            android:inputType="number"
+            android:layout_toRightOf="@id/txtDuracion"
+            android:background="@drawable/boton_redondo" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Duración(Horas)"
-        android:id="@+id/eTextDemTempo"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:inputType="number"
-        android:layout_gravity="center_horizontal"/>
-    <EditText
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/llMaxUsers"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/llDuracion">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:id="@+id/txtLimite"
+            android:text="Límite de usuarios: "/>
+
+        <EditText
+            android:id="@+id/eDemMaxUsers"
+            android:layout_width="266dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/txtLimite"
+            android:background="@drawable/boton_redondo"
+            android:hint="Sen límite" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Num Persoas"
-        android:textColor="@color/white"
-        android:inputType="number"
-        android:textColorHint="@color/white"
-        android:id="@+id/eDemMaxUsers"
-        android:layout_gravity="center_horizontal"/>
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:id="@+id/llDescricion"
+        android:layout_below="@id/llMaxUsers">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Descrición: "
+            android:id="@+id/txtDescricion"/>
+
+        <EditText
+            android:id="@+id/eTextDemDescricion"
+            android:layout_width="266dp"
+            android:layout_height="135dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="54dp"
+            android:layout_marginLeft="54dp"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/txtDescricion"
+            android:background="@drawable/boton_redondo"
+            android:hint="Descrición" />
+
+    </RelativeLayout>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crear Demanda"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:paddingTop="10dp"
         android:id="@+id/btnCrearDem"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/llDescricion"/>
 
-</LinearLayout>
+</RelativeLayout>

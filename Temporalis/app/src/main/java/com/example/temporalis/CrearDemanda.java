@@ -56,8 +56,8 @@ public class CrearDemanda extends AppCompatActivity {
                 String data = eTData.getText().toString();
                 EditText eTHora = findViewById(R.id.eTextDemHora);
                 String hora = eTHora.getText().toString();
-                EditText etextLugar = findViewById(R.id.eDemLugar);
-                String lugar = etextLugar.getText().toString();
+                Spinner etextLugar = findViewById(R.id.eDemLugar);
+                String lugar = etextLugar.getSelectedItem().toString();
                 EditText eTMaxUsers = findViewById(R.id.eDemMaxUsers);
                 String sMaxPersoas = eTMaxUsers.getText().toString();
                 boolean tipo = false;
@@ -65,7 +65,7 @@ public class CrearDemanda extends AppCompatActivity {
                 EditText eTextDuracion = findViewById(R.id.eTextDemTempo);
                 String sDuracion = eTextDuracion.getText().toString();
                 if(titulo.equals("")||descricion.equals("")||data.equals("")||hora.equals("")||lugar.equals("")||sDuracion.equals("")){
-                    Toast.makeText(CrearDemanda.this, "Todos os campos son obrigatorios", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearDemanda.this, "Todos os campos excepto Límite de usuarios son obrigatorios", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(checkDate(data,hora)){
@@ -107,7 +107,7 @@ public class CrearDemanda extends AppCompatActivity {
         eTData.setText(demanda.getData());
         EditText eTHora = findViewById(R.id.eTextDemHora);
         eTHora.setText(demanda.getHora());
-        EditText etextLugar = findViewById(R.id.eDemLugar);
+        Spinner etextLugar = findViewById(R.id.eDemLugar);
         EditText eTMaxUsers = findViewById(R.id.eDemMaxUsers);
         if(demanda.getNumUsuarios() == 25000){
             eTMaxUsers.setText("");
@@ -127,8 +127,8 @@ public class CrearDemanda extends AppCompatActivity {
                 String data = eTData.getText().toString();
                 EditText eTHora = findViewById(R.id.eTextDemHora);
                 String hora = eTHora.getText().toString();
-                EditText etextLugar = findViewById(R.id.eDemLugar);
-                String lugar = etextLugar.getText().toString();
+                Spinner etextLugar = findViewById(R.id.eDemLugar);
+                String lugar = etextLugar.getSelectedItem().toString();
                 EditText eTMaxUsers = findViewById(R.id.eDemMaxUsers);
                 String sMaxPersoas = eTMaxUsers.getText().toString();
                 EditText eTextDuracion = findViewById(R.id.eTextDemTempo);

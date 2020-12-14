@@ -49,7 +49,7 @@ public class MeusServizos extends AppCompatActivity {
             int idOferta = oferta.getIdServizo();
             int relacion = baseDatos.countEmpregaServizo(idOferta);
             int ofertasPagadas = baseDatos.countEmpregaServizoPagados(idOferta);
-            if(relacion != ofertasPagadas){
+            if(relacion != ofertasPagadas || relacion == 0){
                 ofertasNonPagadas.add(oferta);
             }
         }
@@ -89,7 +89,7 @@ public class MeusServizos extends AppCompatActivity {
             int idDemanda = demanda.getIdServizo();
             int relacion = baseDatos.countEmpregaServizo(idDemanda);
             int demandasPagadas = baseDatos.countEmpregaServizoPagados(idDemanda);
-            if(relacion != demandasPagadas){
+            if(relacion != demandasPagadas || relacion == 0){
                 demandasNonPagadas.add(demanda);
             }
         }

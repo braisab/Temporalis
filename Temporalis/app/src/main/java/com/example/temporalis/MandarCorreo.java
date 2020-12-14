@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.sax.TextElementListener;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +58,40 @@ public class MandarCorreo extends AppCompatActivity {
                                         "Elixe un cliente de Correo:"));
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent ofertasIntent = new Intent(this,Ofertas.class);
+        Intent demandasIntent = new Intent(this,Demandas.class);
+        Intent selfIntent = new Intent(this,MeusServizos.class);
+        Intent otherServices = new Intent(this,ServizosAceptados.class);
+        Intent perfilIntent = new Intent(this,Perfil.class);
+        switch (item.getItemId()) {
+            case R.id.action_bar_ofertas:
+                startActivity(ofertasIntent);
+                return true;
+            case R.id.action_bar_demandas:
+                startActivity(demandasIntent);
+                return true;
+            case R.id.action_bar_self_services:
+                startActivity(selfIntent);
+                return true;
+            case R.id.other_services:
+                startActivity(otherServices);
+                return true;
+            case R.id.action_bar_perfil:
+                startActivity(perfilIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public static class MailJob extends AsyncTask<MailJob.Mail,Void,Void> {
