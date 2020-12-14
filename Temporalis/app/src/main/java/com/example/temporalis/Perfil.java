@@ -111,6 +111,7 @@ public class Perfil extends AppCompatActivity {
                 editTextTelefono.setEnabled(false);
                 editTextZona.setEnabled(false);
                 editTextPerfil.setEnabled(false);
+                startActivity(recargar);
             }
         });
     }

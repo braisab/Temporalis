@@ -41,7 +41,7 @@ public class ServizosAceptados extends AppCompatActivity {
         ArrayList<Servizo> servizos = new ArrayList<>();
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
-        ArrayList<Integer> idsServizos = baseDatos.getIdServizosEmpSer(idUsuario);
+        ArrayList<Integer> idsServizos = baseDatos.getIdServizosEmpSerNonPagados(idUsuario);
         for(int idServizo : idsServizos){
             Servizo servizo = baseDatos.getOfertaAceptada(idServizo);
             if(servizo.isTipo()) {
@@ -79,7 +79,7 @@ public class ServizosAceptados extends AppCompatActivity {
         ArrayList<Servizo> demandas = new ArrayList<>();
         String nomeUsuario = Login.getInstance().eTextUser.getText().toString();
         int idUsuario = baseDatos.getUserId(nomeUsuario);
-        ArrayList<Integer> idsServizos = baseDatos.getIdServizosEmpSer(idUsuario);
+        ArrayList<Integer> idsServizos = baseDatos.getIdServizosEmpSerNonPagados(idUsuario);
         for(int idServizo : idsServizos){
             Servizo servizo = baseDatos.getOfertaAceptada(idServizo);
             if(!servizo.isTipo()) {

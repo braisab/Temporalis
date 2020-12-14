@@ -569,6 +569,22 @@ public class BBDD extends SQLiteOpenHelper {
         return ids;
     }
 
+    public ArrayList<Integer> getIdServizosEmpSerNonPagados(int idUsuario){
+        sqLite = getReadableDatabase();
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sIdUsuario = idUsuario +"";
+        String[] param = {sIdUsuario, "false"};
+        Cursor cursor = sqLite.rawQuery("SELECT idServizo FROM EMPREGASERVIZO WHERE idUsuarioCliente = ? AND Pagado = ?", param);
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                int id = cursor.getInt(0);
+                ids.add(id);
+                cursor.moveToNext();
+            }
+        }
+        return ids;
+    }
+
     public Servizo getOfertaAceptada(int idServizo){
         sqLite = getReadableDatabase();
         String sIdServizo = idServizo + "";
