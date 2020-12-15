@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,18 +35,30 @@ public class Perfil extends AppCompatActivity {
         int telefono = usuario.getTelefono();
         String sTelefono = telefono+"";
         editTextTelefono.setText(sTelefono);
-        EditText editTextZona = findViewById(R.id.eTextZonaPerfil);
-        editTextZona.setText(usuario.getLocalizacion());
+        String zona = usuario.getLocalizacion();
+        Spinner editTextZona = findViewById(R.id.eTextZonaPerfil);
+        editTextZona.setSelection(obtenPosicionItem(editTextZona,zona));
+        editTextZona.setEnabled(false);
         EditText editTextPerfil = findViewById(R.id.eTextPerfil);
         editTextPerfil.setText(usuario.getPerfil());
         xestionarBoton();
+    }
+
+    public int obtenPosicionItem(Spinner spinner, String lugar) {
+        int posicion = 0;
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(lugar)) {
+                posicion = i;
+            }
+        }
+        return posicion;
     }
 
     public void xestionarBoton() {
         EditText editTextnome = findViewById(R.id.eTextNomePerfil);
         EditText editTextCorreo = findViewById(R.id.eTextCorreoPerfil);
         EditText editTextTelefono = findViewById(R.id.eTextTelefonoPerfil);
-        EditText editTextZona = findViewById(R.id.eTextZonaPerfil);
+        Spinner editTextZona = findViewById(R.id.eTextZonaPerfil);
         Button btnCancelarEdicion = findViewById(R.id.btnCancelarEdicion);
         Button btnPerfil = findViewById(R.id.btnEditarPerfi);
         EditText editTextPerfil = findViewById(R.id.eTextPerfil);
@@ -77,7 +90,7 @@ public class Perfil extends AppCompatActivity {
         EditText editTextnome = findViewById(R.id.eTextNomePerfil);
         EditText editTextCorreo = findViewById(R.id.eTextCorreoPerfil);
         EditText editTextTelefono = findViewById(R.id.eTextTelefonoPerfil);
-        EditText editTextZona = findViewById(R.id.eTextZonaPerfil);
+        Spinner editTextZona = findViewById(R.id.eTextZonaPerfil);
         EditText editTextPerfil = findViewById(R.id.eTextPerfil);
         Button btnCancelarEdicion = findViewById(R.id.btnCancelarEdicion);
         Button btnPerfil = findViewById(R.id.btnEditarPerfi);
@@ -94,7 +107,7 @@ public class Perfil extends AppCompatActivity {
                 String nome = editTextnome.getText().toString();
                 String correo = editTextCorreo.getText().toString();
                 String telefono = editTextTelefono.getText().toString();
-                String zona = editTextZona.getText().toString();
+                String zona = editTextZona.getSelectedItem().toString();
                 String perfil = editTextPerfil.getText().toString();
                 baseDatos.modificarPerfil(sIdUsuario,nome,correo,telefono,zona,perfil);
                 Toast.makeText(Perfil.this, "Perfil gardado", Toast.LENGTH_SHORT).show();

@@ -167,6 +167,20 @@ public class Oferta extends AppCompatActivity {
             });
         }
 
+        int relacion = baseDatos.countEmpregaServizo(oferta.getIdServizo());
+        if(idUsuario == idUsuarioLogeado && isDatePass() && relacion == 0){
+            btnOferta.setVisibility(View.VISIBLE);
+            btnOferta.setBackgroundColor(getResources().getColor(R.color.red));
+            btnOferta.setText("Borrar Oferta");
+            btnOferta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogBorrar();
+                }
+            });
+        }
+
+
         if(idUsuario != idUsuarioLogeado && existeEmpSer && !isDateArrives()){
             btnEditar.setVisibility(View.INVISIBLE);
             btnOferta.setText("Cancelar");

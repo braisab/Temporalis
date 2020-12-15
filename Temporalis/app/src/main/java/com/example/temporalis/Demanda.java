@@ -348,7 +348,7 @@ public class Demanda extends AppCompatActivity {
                             for (int idCliente : idsClientes) {
                                 String correoUsuario = baseDatos.getCorreoUsuario(idCliente);
                                 new MandarCorreo.MailJob(user, passwd).execute(
-                                        new MandarCorreo.MailJob.Mail("braisterbutalino@gmail.com", correoUsuario, "Temporalis: Demanda Borrada", "O usuario " + nomeCreador + " borrou a demanda " + demanda.getTitulo() + " con data " + demanda.getData() + " " + demanda.getHora())
+                                        new MandarCorreo.MailJob.Mail(user, correoUsuario, "Temporalis: Demanda Borrada", "O usuario " + nomeCreador + " borrou a demanda " + demanda.getTitulo() + " con data " + demanda.getData() + " " + demanda.getHora())
                                 );
                             }
                         }
