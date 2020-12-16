@@ -9,33 +9,22 @@ No relativo ao hardware, será válido calquera dispositivo con sistema Android.
 Será necesario un servidor na nube para implantar a base de datos externa á cal se conectará a aplicación para facer todas as operacións que dependan de ela. O servidor escollido nun principio será un servidor <a href="https://www.ionos.es/server-configurator?__sendingdata=1&cart.action=add-bundle&cart.bundle=tariff-cloud-vps-fix-xxl-bundle&packageselection=servidores%2Fvps">VPS</a>, unha vez que o proxecto comeza a contar con moitos máis usuarios contratarase un servidor <a href="https://www.ionos.es/server-configurator?__sendingdata=1&cart.action=add-bundle&cart.bundle=tariff-ngcs-unlimited-fix-xxl-bundle&packageselection=cloud%2Fservidores-cloud">Cloud</a>.
 
 **- Software necesario (S.O. válidos, software externo co que interaciona a nosa aplicación, etc.).**  
-Para lanzar a aplicación necesitarase un dispositivo con SO Android 6.0 ou unha versión maior.  
-Na fase de desenvolvemento usarase un equipo co SO ubuntu 20.04 LTS para o desenvolvemento co programa Android Studio instalado e co SXBD MySQL Server para realizar as probas sobre a base de datos.  
 Ademais contaremos coa API JDBC para a conexión da aplicación coa BD dende o lado do cliente.  
+Cada usuario debe dispoñer dun dispositivo con SO Android 6.0 ou unha versión maior e instalar a App.
 
 **Configuración inicial seguridade: devasa, control usuarios, rede.**  
 A seguridade estará xestionada polo lado do servidor contratado.  
 
 **Carga inicial de datos na base de datos. Migración de datos xa existentes noutros formatos.**  
-Non existe unha carga inicial de datos na base de datos.  Crearanse as taboas
-
-**Usuarios do sistema. Usuarios da aplicación.**  
-Existirá un usuario con permisos de administrador para poder xestionar a BD, os usuarios da aplicación nunca poderán acceder como administradores.  
-
-TODO:(Configuracion da BBDD: FUsionar os dous anteriores)  
+  Crearanse as taboas unhya vez o usuario lanze a aplicación por primeira vez.   
+  Créase o usuario que usará Android para conectarse, con tódolos permisos sobre as táboas unha vez este se rexistre. Existirá un usuario con permisos de administrador para poder xestionar a BD, os usuarios da aplicación nunca poderán acceder como administradores.  
 
 ### Información relativa á administración do sistema, é dicir, tarefas que se deberán realizar unha vez que o sistema estea funcionando, como por exemplo
 
-**Copias de seguridade do sistema.**
-Realizarase unha copia de seguridade semanal do sistema na fase de desenvolvemento e poidamos así facer un backup de este se ocurre algún fallo.  
-
 **Copias de seguridade da base de datos.**  
-As copias de seguridade da BD estarán xestionadas pola empresa contratada do servidor na nube.   Copia de seguridade todos os dias as 3 da maña
+As copias de seguridade da BD estarán xestionadas pola empresa contratada do servidor na nube.
 
 ### Información relativa ó mantemento do sistema
-
-**Corrixir erros.**  
-Durante a fase de produción seguiranse realizando test en base ao código da aplicación para buscar erros e poder correxilos.  
 
 **Engadir novas funcionalidades.**  
 Durante a fase de producción contemplase engadir nopvas funcionalidades á aplicación como poden ser:  
