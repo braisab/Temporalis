@@ -22,7 +22,7 @@ Na imaxe podemos observar o AVD sobre o que se lanzará, Nexus One API 27 neste 
 > Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.
 
 
-## Sobre el autor
+## Sobre o autor
 
 >Actualmente estudando Desenvolvemento de Aplicacións Multiplataforma.  
 Como tecnoloxías que máis domino:  
@@ -58,8 +58,5 @@ https://www.gnu.org/licenses/fdl-1.3.html
 
 ## Guía de contribución
 
-> *TODO*: Tratándose de un proyecto de software libre, es muy importante que expongas cómo se puede contribuir con tu proyecto. Algunos ejemplos de esto son realizar nuevas funcionalidades, corrección y/u optimización del código, realización de tests automatizados, nuevas interfaces de integración, desarrollo de plugins, etc. etc. Sé lo más conciso que puedas.
-
-## Links
-
-> *TODO*: Enlaces externos y descipciones de estos enlaces que creas conveniente indicar aquí. Generalmente ya van a estar integrados con tu documentación, pero si requieres realizar un listado de ellos, este es el lugar.
+> Pódese contribuir co desenvolvemento da aplicación no seguinte enlace:  
+https://github.com/braisab/Temporalis
