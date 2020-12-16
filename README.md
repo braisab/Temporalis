@@ -1,35 +1,51 @@
 # Proyecto fin de ciclo
-
-> *TODO*: Este documento será la "*página de aterrizaje*" de tu proyecto. Será lo primero que vean los que se interesen por él. Cúida su redacción con todo tu mimo. Elimina posteriormente todas las lineas "*TODO*" cuando creas finalizada su redacción.
-> Puedes acompañar a la redacción de este fichero con imágenes o gifs, pero no abuses de ellos.
+## Temporalis
 
 ## Descripción
+>**Temporalis** é unha aplicación que axuda a implantación de un banco de tempo no concello de Santiago.  
+**Que é un banco de tempo?**  
+Un banco de tempo é un concepto no que persoas ofrecen servizos, coñecementos ou habilidades en intercambio por outros servizos coñecementos ou habilidades, dentro dunha relación na que o económico desaparece e a medida do valor de todo o achegado é o tempo que se invirte. Cada servizo, coñecemento ou habilidade intercambiada ten o mesmo valor, medido en unidades de tempo, independentemente de que o doante sexa un principiante ou un experto. Os intercambios desta maneira realmente o que premian é a solidariedade entre os integrantes do banco de tempo.   
+**Como axuda Temporalis a axilizar esta iniciativa?**  
+Fomentando a comunicación entre as persoas que queiran facer uso do banco de tempo e xestionando o mesmo mediante a creación de ofertas e demandas que precisen os usuarios. Cada usuario disporá de unha "conta de tempo" na que se lle irán sumando e restando horas en función do interese no ofertado ou demandado.   
+## Instalación / Posta en marcha
 
-> *TODO*: Realiza una breve descripción del proyecto. No menos de 100 palabras y no más de 300. Resalta lo fundamental **con tus propias palabras**. Utiliza un lenguaje correcto, **pero natural**, que lo entienda todo el mundo, incluso y en especial, las personas que no tengan un conocimiento técnico avanzado. Puede ser un estracto o resumen de apartados que ya contemples en otros ficheros.
 
-## Instalación / Puesta en marcha
-
-> *TODO*: En este apartado describe con toda precisión y a poder ser con la mayor simplicidad/facilidad posible, cómo poner en marcha tu aplicación para probarla (en un ambiente local). Se valorará muy positivamente que este proceso sea lo más fácil posible, con una simple instrucción (p. e. un script de instalación).
-> Si tu proyecto es documental, realiza una especificación de cómo va a ser este proceso. En otras palabras, realiza este apartado independientemente que no haya implementación.
+>Actualmente unha vez descargado o repositorio podemos abrilo con Android Studio e se temos algún AVD descargado, ou un terminal móbil conectado podemos lanzar a aplicación a cal se instala automáticamente en este.  
+Na imaxe podemos observar o AVD sobre o que se lanzará, Nexus One API 27 neste caso , e o botón de Start para lanzar a app.
+![](doc/img/instalacion_avd.png)  
+>
+>Nun futuro a aplicación poderase descargar da Play Store de Google e da aplicación para descargas Open Source F-Droid.
 
 ## Uso
 
 > *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz de terminal, describe aquí su sintaxis. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
 > Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.
 
+
 ## Sobre el autor
 
-> *TODO*: Realiza una breve descripción de quien eres (perfil profesional), tus puntos fuertes, o tecnologías que más dominas... y porqué te has decantado por este proyecto. **No más de 200 palabras**. Indica la forma fiable de contactar contigo en el presente y en el futuro.
-
+>Actualmente estudando Desenvolvemento de Aplicacións Multiplataforma.  
+Como tecnoloxías que máis domino:  
+- Java, Python.
+- HTML, CSS, XML, Bootstrap.
+- MySQL, PostgreSQL, Microsoft SQL, MongoDB, MariaDB.
+- Odoo, Git, LXC, Docker
+>
+>Decanteime por este proxecto porque quería crear unha app que se centrase nas persoas e nos seus intereses e necesidades e que non estivera centrado nun único servizo. Un banco do tempo é a iniciativa que cumple con estos requisitos, e unha app que xestione un é unha boa idea para esto.  
+>
+>Contacto:
+  - Correo-e: **braisterbutalino@gmail.com**
+  - GitHub: **https://github.com/braisab**
 ## Licencia
 
-> *TODO*: Es requisito INDISPENSABLE el licenciar explícitamente el proyecto software. Se recomienda licenciar con *GNU Free Documentation License Version 1.3*. Crear un fichero `LICENSE` en la raiz del repo, con tu fichero de licencia. Recuerda que si empleas una licencia de software libre estás autorizando la derivación de tu obra bajo la misma licencia que elijas, pudiendo dar continuidad, p. e. otro alumno, para continuar tu proyecto en otro curso.
-> Si tu proyecto es documental, recomendamos los términos de *GNU Free Documentation License Version 1.3*, crea igualmente el fichero `LICENSE`. Será especialmente valorado en este caso, la claridad de la especificación para que el proyecto pueda ser ejecutado partiendo de lo proyectado.
+> [*GNU Free Documentation License Version 1.3*.](LICENSE.md)  
+>
+>Enlace:  
+https://www.gnu.org/licenses/fdl-1.3.html
 
 
 ## Índice
 
-> *TODO*: Simplemente indexa ordenadamente todo tu proyecto.
 
 1. Anteproyecto
     * 1.1. [Idea](doc/templates/1_idea.md)
