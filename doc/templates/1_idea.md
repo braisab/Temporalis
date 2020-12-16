@@ -2,7 +2,7 @@
 
 • **O tipo de proxecto que se vai desenvolver (enfoque documental ou orientado á creación dun entregable)**
 
-O proxecto a desenvolver será un entregable.
+O proxecto a desenvolver terá un enfoque documental.
 
 **• Unha descrición do proxecto**  
 O proxecto está baseado nunha aplicación en android que xestione un banco do tempo dentro do concello de Santiago de Compostela.  
