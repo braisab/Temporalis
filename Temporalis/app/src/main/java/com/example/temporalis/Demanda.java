@@ -73,6 +73,8 @@ public class Demanda extends AppCompatActivity {
         int idCreador = demanda.getUsuarioCreador();
         String nomeCreador = baseDatos.getNomeUsuario(idCreador);
         textViewCreador.setText(nomeCreador);
+        TextView txtDescricion = findViewById(R.id.txtwDescripcion);
+        txtDescricion.setText(demanda.getDescricion());
         TextView textViewClientes = findViewById(R.id.txtClientes);
        idsClientes = baseDatos.getIdUsuariosClientes(demanda.getIdServizo());
         for(int idCliente : idsClientes){
@@ -158,6 +160,21 @@ public class Demanda extends AppCompatActivity {
                 }
             });
         }
+
+        int relacion = baseDatos.countEmpregaServizo(demanda.getIdServizo());
+        if(idUsuario == idCreador && isDatePass() && relacion == 0){
+            btnDemanda.setVisibility(View.VISIBLE);
+            btnDemanda.setBackgroundColor(getResources().getColor(R.color.red));
+            btnDemanda.setTextColor(getResources().getColor(R.color.white));
+            btnDemanda.setText("Borrar Demanda");
+            btnDemanda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lanzarDialogBorrar();
+                }
+            });
+        }
+
         if(idUsuario != idCreador && existeEmpSer && !isDateArrives()){
             btnEditar.setVisibility(View.INVISIBLE);
             btnDemanda.setText("Cancelar");

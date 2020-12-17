@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class MeusServizos extends AppCompatActivity {
     public BBDD baseDatos;
-    public Servizo oferta;
     public Servizo demanda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,8 @@ public class MeusServizos extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                oferta = servizos.get(position);
+                Servizo oferta;
+                oferta = ofertasNonPagadas.get(position);
                 ofertaIntent.putExtra("uniqueId", "intentMeusServizos");
                 ofertaIntent.putExtra("intentDeMeusServizos", oferta);
                 startActivity(ofertaIntent);
@@ -110,7 +110,7 @@ public class MeusServizos extends AppCompatActivity {
         listViewDemandas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                demanda = servizos.get(position);
+                demanda = demandasNonPagadas.get(position);
                 demandaIntent.putExtra("uniqueId", "intentDemandasMeusServizos");
                 demandaIntent.putExtra("intentDeDemandaMS", demanda);
                 startActivity(demandaIntent);

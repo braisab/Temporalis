@@ -36,7 +36,6 @@ public class Demandas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demandas);
-        checkMaxUsers();
         checkSaldoCreadorAboutNUsers();
         checkDate();
         cargarListView();
@@ -107,19 +106,6 @@ public class Demandas extends AppCompatActivity {
         }
     }
 
-    public void checkMaxUsers(){
-        baseDatos = new BBDD(this);
-        baseDatos.getWritableDatabase();
-        ArrayList<Servizo> demandas = baseDatos.getDemandas();
-        for(Servizo demanda : demandas) {
-            int countUsers = baseDatos.getCountUsersServizo(demanda.getIdServizo());
-            if(countUsers >= demanda.getNumUsuarios()){
-                baseDatos.setServizoInvisible(demanda.getIdServizo());
-            }else{
-                baseDatos.setServizoVisible(demanda.getIdServizo());
-            }
-        }
-    }
 
     public void checkSaldoCreadorAboutNUsers(){
         baseDatos = new BBDD(this);
@@ -131,7 +117,7 @@ public class Demandas extends AppCompatActivity {
             int duracion = demanda.getTempoServizo();
             int countUsers = baseDatos.getCountUsersServizo(demanda.getIdServizo());
             int diferenciaSaldoDuracion = saldoCreador - (duracion * countUsers);
-            if(diferenciaSaldoDuracion <= 0){
+            if(diferenciaSaldoDuracion <= 0  || countUsers >= demanda.getNumUsuarios()){
                 baseDatos.setServizoInvisible(demanda.getIdServizo());
             }else{
                 baseDatos.setServizoVisible(demanda.getIdServizo());

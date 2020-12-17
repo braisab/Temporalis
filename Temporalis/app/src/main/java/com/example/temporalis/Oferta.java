@@ -92,6 +92,8 @@ public class Oferta extends AppCompatActivity {
         TextView textViewCreador = findViewById(R.id.txtCreador);
         String nomeCreador = baseDatos.getNomeUsuario(oferta.getUsuarioCreador());
         textViewCreador.setText(nomeCreador);
+        TextView textViewDescricion = findViewById(R.id.txtwDescripcion);
+        textViewDescricion.setText(oferta.getDescricion());
         TextView textViewClientes = findViewById(R.id.txtClientes);
         idsClientes = baseDatos.getIdUsuariosClientes(oferta.getIdServizo());
         for(int idCliente : idsClientes){
