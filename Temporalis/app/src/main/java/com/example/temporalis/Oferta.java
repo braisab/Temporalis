@@ -1,6 +1,7 @@
 package com.example.temporalis;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -205,6 +206,7 @@ public class Oferta extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     pagar();
+//                    finish();
                 }
             });
         }

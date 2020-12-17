@@ -1,5 +1,6 @@
 package com.example.temporalis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ public class ResetPasswd extends AppCompatActivity {
     public void sendMail(){
         baseDatos = new BBDD(this);
         baseDatos.getReadableDatabase();
+        Intent logIntent = new Intent(this,Login.class);
         Button btnSendContrasinal = findViewById(R.id.btnResetPass);
         btnSendContrasinal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,8 @@ public class ResetPasswd extends AppCompatActivity {
                     new MandarCorreo.MailJob(user, passwd).execute(
                             new MandarCorreo.MailJob.Mail(user, correo, "Temporalis: Usuario e contrasinal", "\nNome de Usuario: " + nomeUsuario + "\nContrasinal: " + pass)
                     );
+                    Toast.makeText(ResetPasswd.this, "Correo enviado", Toast.LENGTH_SHORT).show();
+                    startActivity(logIntent);
                 }else{
                     Toast.makeText(ResetPasswd.this, "O correo-e non existe", Toast.LENGTH_SHORT).show();
                 }
