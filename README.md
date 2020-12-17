@@ -19,9 +19,24 @@ Na imaxe podemos observar o AVD sobre o que se lanzará, Nexus One API 27 neste 
 ## Uso
 
 > *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz de terminal, describe aquí su sintaxis. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
-> Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.
-
-
+> Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.  
+>Ao lanzar a aplicación veremos unha pantalla de Login desde a cal poderemos entrar na aplicación co nome de usuario e o contrasinal e tamén poderemos entrar desde aquí a unha pantalla de rexistro, para gardar ao usuario que usará a aplicación. Ademais nesta pantalla contaremos con unha opción para entrar noutra interface na que se pode recuperar o nome de usuario e contrasinal no caso de que se lle esquecese ao usuario.  
+![](doc/img/mockups1.png)  
+>  
+Unha vez dentro da app poderemos acceder ás ofertas e as demandas que hai rexistradas na BD.- É nesta pantalla onde poderemos clickar no botón de Crear Oferta ou Demanda (dependendo da pantalla na que nos atopemos) para poder rexistrar un novo Servizo.
+![](doc/img/mockups3.png)
+![](doc/img/mockups4.png)
+>
+>O usuario pode entrar desde o menú ás ofertas e demandas creadas por el e borralas e editalas se así o desexa. Se as borra ou edita mandaráselles un correo de aviso aos usuarios que aceptaran esta oferta.
+![](doc/img/mockups5.png)  
+>
+>Existe tamén no menú un apartado para ver as ofertas e as demandas que o usuario aceptou e, se así o decide e antes de que chegue a data e a hora do servizo, poderá cancelalo e enviaráselle un correo de aviso ao usuario que o creou. Ademais desde este, se pinchamos no usuario que o creou neste caso, abrirase un pop-up para poder enviarlle un correo, ou chamalo ou enviarlle unha mensaxe se este ten o seu teléfono rexistrado.  
+Unha vez pase o tempo do servizo aparecerá un botón para pagar as horas empregadas.
+![](doc/img/mockups6.png)
+![](doc/img/mockups7.png)  
+>
+>Tamén no menú hai unha pestana de Perfil, na cal o usuario pode entrar a consultar o seu saldo de horas e modificar, se así o desexa o seu perfil de usuario.  
+![](doc/img/mockups8.png)
 ## Sobre o autor
 
 >Actualmente estudando Desenvolvemento de Aplicacións Multiplataforma.  

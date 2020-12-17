@@ -17,6 +17,7 @@
 ![](doc/img/mockups5.png)
 ![](doc/img/mockups6.png)
 ![](doc/img/mockups7.png)
+![](doc/img/mockups8.png)
 ## Diagrama de Base de Datos
 ![](doc/img/E_R_BancoTempo.png)
 ![](doc/img/EsquemaRelacional.png)
