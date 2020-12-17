@@ -18,8 +18,7 @@ Na imaxe podemos observar o AVD sobre o que se lanzará, Nexus One API 27 neste 
 
 ## Uso
 
-> *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz de terminal, describe aquí su sintaxis. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
-> Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.  
+
 >Ao lanzar a aplicación veremos unha pantalla de Login desde a cal poderemos entrar na aplicación co nome de usuario e o contrasinal e tamén poderemos entrar desde aquí a unha pantalla de rexistro, para gardar ao usuario que usará a aplicación. Ademais nesta pantalla contaremos con unha opción para entrar noutra interface na que se pode recuperar o nome de usuario e contrasinal no caso de que se lle esquecese ao usuario.  
 ![](doc/img/mockups1.png)  
 >  
